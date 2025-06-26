@@ -1,0 +1,1872 @@
+#base robot_standard.pop
+#base robot_giant.pop
+//
+// Starting Currency: 1000
+//
+// +----------+----------+----------+
+// | Wave     | Currency | A+       |
+// +----------+----------+----------+
+// | Wave 1   | 950      | 1050     |
+// +----------+----------+----------+
+// | Total    | 950      | 1050     |
+// +----------+----------+----------+
+//
+WaveSchedule
+{
+    StartingCurrency 1000
+    CanBotsAttackWhileInSpawnRoom no
+    RespawnWaveTime 0
+    AddSentryBusterWhenDamageDealtExceeds 3000
+    AddSentryBusterWhenKillCountExceeds 15
+	// MaxRedPlayers 6 [$SIGSEGV]
+	// AllowBotExtraSlots 1 [$SIGSEGV]
+    // RobotLimit 45 [$SIGSEGV]
+	// WaveStartCountdown 3 [$SIGSEGV]
+    // Advanced 1
+	// DisableSound "Announcer.MVM_Wave_End" [$SIGSEGV]
+	// DisableSound "Announcer.MVM_Get_To_Upgrade" [$SIGSEGV]
+	// DisableSound "Announcer.MVM_Final_Wave_End"	 [$SIGSEGV]
+	// DisableSound "music.mvm_end_last_wave"						 [$SIGSEGV]
+	// DisableSound "music.mvm_end_mid_wave"						 [$SIGSEGV]
+	// DisableSound "music.mvm_end_tank_wave"						 [$SIGSEGV]
+	// DisableSound "music.mvm_end_wave"							 [$SIGSEGV]
+	// DisableSound "music.mvm_lost_wave"							 [$SIGSEGV]
+	// DisableSound "music.mvm_start_last_wave"					 [$SIGSEGV]
+	// DisableSound "music.mvm_start_mid_wave"						 [$SIGSEGV]
+	// DisableSound "music.mvm_start_tank_wave"					 [$SIGSEGV]
+	// DisableSound "music.mvm_start_wave" [$SIGSEGV]
+	// DisableSound "Announcer.MVM_First_Wave_Start"				 [$SIGSEGV]
+	// DisableSound "Announcer.MVM_Wave_Start"						 [$SIGSEGV]
+	// DisableSound "Announcer.MVM_Wave_End"						 [$SIGSEGV]
+	// DisableSound "Announcer.MVM_Wave_Lose"						 [$SIGSEGV]
+	// DisableSound "Announcer.MVM_Final_Wave_Start"	 [$SIGSEGV]
+    // PrecacheModel "models/watermine/drill_tank.mdl" [$SIGSEGV]
+	// PrecacheModel "models/watermine/drill_tank_damage1.mdl" [$SIGSEGV]
+	// PrecacheModel "models/watermine/drill_tank_damage2.mdl" [$SIGSEGV]
+	// PrecacheModel "models/watermine/drill_tank_damage3.mdl" [$SIGSEGV]
+	// PrecacheModel "models/props_mvm/indicator/indicator_circle.mdl" [$SIGSEGV]
+	// PrecacheModel "models/spybase/emp_tank.mdl" [$SIGSEGV]
+	// PrecacheModel "models/effects/mvm_holograms/mvm_cappoint_hologram.mdl" [$SIGSEGV]
+	// PrecacheModel "models/robot_factory/monorail/trains/monorail_cargo_container_separate_open.mdl" [$SIGSEGV]
+    // PrecacheModel "models/effects/mvm_holograms/mvm_cappoint_hologram.mdl" [$SIGSEGV]
+	// PrecacheModel "models/effects/mvm_holograms/mvm_cappoint_hologram_onlyblue.mdl" [$SIGSEGV]
+	// PrecacheSound "act1withintro.mp3" [$SIGSEGV]
+	// PrecacheSound "act1loop.mp3" [$SIGSEGV]
+	// PrecacheSound "wee_woo_wee_woo.mp3" [$SIGSEGV]
+	// PrecacheSound "tank_emp_deploy.mp3" [$SIGSEGV]
+  	// PrecacheGeneric "materials/overlays/term_title_0_0.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_0_0.vmt" [$SIGSEGV]
+    // PrecacheGeneric "materials/overlays/term_title_0_1.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_0_1.vmt" [$SIGSEGV]
+    // PrecacheGeneric "materials/overlays/term_title_0_2.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_0_2.vmt" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_1.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_1.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_2_0.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_2_0.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_2_1.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_2_1.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_2_2.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_2_2.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_2_3.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_2_3.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_2_4.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_2_4.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_2_5.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_2_5.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_3.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_3.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_4_0.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_4_0.vmt" [$SIGSEGV]
+ 	// PrecacheGeneric "materials/overlays/term_title_4_1.vtf" [$SIGSEGV]
+	// PrecacheGeneric "materials/overlays/term_title_4_1.vmt" [$SIGSEGV]
+	// LuaScriptFile "tank_repair.lua" [$SIGSEGV]
+	// ExtraTankPath [$SIGSEGV]
+	// {
+	// 	Name "tankd_path"
+	// 	Node "-5856 4176 576" // tank_path_1
+	// 	Node "-5584 4256 576" // tank_path_2
+	// 	Node "-5264 4368 576" // tank_path_3
+	// 	Node "-5232 4528 576" // tank_path_4
+	// 	Node "-5280 4720 576" // tank_path_5
+	// 	Node "-5280 4928 576" // tank_path_6
+	// 	Node "-5232 5120 576" // tank_path_7
+	// 	Node "-5136 5328 576" // tank_path_8
+	// 	Node "-4976 5504 576" // tank_path_9
+	// 	Node "-4688 5808 576" // tank_path_10
+	// 	Node "-4416 5920 576" // tank_path_11
+	// 	Node "-4176 5920 576" // tank_path_12
+	// 	Node "-3872 5920 592" // tank_path_13
+	// 	Node "-3456 5920 736" // tank_path_14
+	// 	Node "-2496 5936 736" // tank_path_15
+	// 	Node "-2320 5984 736" // tank_path_16
+	// 	Node "-2144 6144 736" // tank_path_17
+	// 	Node "-2048 6352 736" // tank_path_18
+	// 	Node "-2016 6592 736" // tank_path_19
+	// 	Node "-2080 7440 752" // tank_path_20
+	// 	Node "-2192 7808 752" // tank_path_21
+	// 	Node "-2304 8064 752" // tank_path_22
+		
+	// 	Node "-2278 8572 696" // tank_path_23
+	// }
+	// ExtraTankPath [$SIGSEGV]
+	// {
+	// 	Name "emp_tank_path"
+	// 	Node "-2283 8763 710"
+	// 	Node "-2252 8365 710"
+	// 	Node "-2317 8114 710"
+	// 	Node "-2158 7806 688"
+	// 	Node "-2066 7557 688"
+	// 	Node "-2046 6292 688"
+	// 	Node "-2255 5870 688"
+	// 	Node "-2201 5625 688"
+	// 	Node "-1849 5413 688"
+	// 	Node "-1833 5320 688"
+	// 	Node "-1824 5090 689"
+	// 	Node "-1824 4920 676"
+	// 	Node "-1824 4751 663"
+	// 	Node "-1824 4591 634"
+	// 	Node "-1824 4414 593"
+	// 	Node "-1824 4222 543"
+	// 	Node "-1824 4182 539"
+	// 	Node "-1824 4168 521"
+	// 	Node "-1794 3970 512"
+	// 	Node "-1350 3516 512"
+	// 	Node "-1274 2226 512"
+	// 	Node "-1271 2160 512"
+	// 	Node "-1271 2159 512"
+	// 	Node "-1271 2158 512"
+	// 	Node "-1271 2190 512"
+
+	// }
+
+	// ExtraSpawnPoint [$SIGSEGV]
+	// {
+	// 	Name "red_spawn_2"
+	// 	X -2329 Y 1542 Z 512
+	// 	TeamNum 3
+	// 	StartDisabled 0
+	// }
+	// ExtraSpawnPoint [$SIGSEGV]
+	// {
+	// 	Name "red_spawn"
+	// 	X -1953 Y 1069 Z 512
+	// 	TeamNum 3
+	// 	StartDisabled 0
+	// }
+	
+    Wave // Wave 1
+    {
+		// CustomMaxWaveNumber 7 [$SIGSEGV]
+        InitWaveOutput
+        {
+            Target wave_start_relay
+            Action runscriptcode
+			Param "
+				IncludeScript(`popextensions_main`, getroottable())
+				IncludeScript(`tankextensions_main`, getroottable())
+				IncludeScript(`termination_popext`, getroottable())
+				IncludeScript(`claudz_logic_v3`)
+				IncludeScript(`tank_repair`)
+				PopExt.AddTankName(`emp_tank`, {
+					Icon =  {
+						name = `tank_red_lite`
+						isCrit = true
+					}
+					Team = 2
+					DisableBomb = 1
+					DisableTracks = 1
+					SpawnTemplate = `temp`
+					Model = {
+						Default = `models/empty.mdl`
+						Damage1 = `models/empty.mdl`
+						Damage2 = `models/empty.mdl`
+						Damage3 = `models/empty.mdl`
+					}
+				})
+			"
+        }
+        StartWaveOutput
+        {
+            Target wave_start_relay
+            Action runscriptcode
+			Param  "
+				EntFire(`wave_start_relay`, `Trigger`)
+				EntFire(`disablethesewavespawns`, `Trigger`)
+				EntFire(`hudtimer`, `enable`, null, 0.5)
+				EntFire(`boton`, `enable`)
+				EntFire(`heytouchthis`,`enable`)
+				EntFire(`boton`,`unlock`)
+				PopExt.SetWaveIconSpawnCount(`sentry_buster_giant_support`, 0, 0)
+				PopExt.SetWaveIconSpawnCount(`heavy_mittens`, 0, 0)
+			"
+        }
+        DoneOutput
+        {
+            Target wave_finished_relay
+            Action Trigger
+        }
+		WaveSpawn
+		{
+			WaitForAllSpawned wavemainfocus
+			TotalCurrency	0
+			TotalCount	1
+			MaxActive	1
+			SpawnCount	1
+			// HideIcon 1 [$SIGSEGV]
+			WaitBeforeStarting	13
+			WaitBetweenSpawns	1
+			Where	spawnbot_side_1
+			TFBot
+			{
+				Template	T_TFBot_SentryBuster
+				ClassIcon 	sentry_buster_giant_support
+				// SpawnTemplate imsolazyilldothis [$SIGSEGV]
+				// UseBusterModel 1 [$SIGSEGV]
+				// Action SuicideBomber [$SIGSEGV]
+				Health 3
+				Tag giant
+				Tag "popext_suicidecounter{ amount = 1.0 }"
+				Tag "popext_spawntemplate{ template = `imsolazyilldothis` }"
+				Tag "popext_usecustommodel{ model = `models/bots/demo/bot_sentry_buster.mdl` }"
+				// doesn't work yet, will be fixed in next update
+				Tag "popext_mission{
+					mission = MISSION_DESTROY_SENTRIES,
+					suicide_bomber = true
+				}"
+				Tag "popext_fireinput{
+					target = `!self`,
+					action = `RunScriptCode`,
+					param = `self.SetOrigin(Vector(-1104, 7645, 688))`
+				}"
+				// CharacterAttributes
+				// {
+				// 	"is suicide counter" 1
+				// }
+				// FireInput
+				// {
+				// 	Target "!self"
+				// 	Action "$SetLocalOrigin"
+				// 	Param  "-1104 7645 688"
+				// 	Delay  0
+				// 	CoolDown 999
+				// }
+			}
+		}
+		WaveSpawn
+		{
+			Name "wavemainfocus"
+			WaitForAllDead ""
+			Where spawnbot_side_3
+			TotalCount 10
+			MaxActive 10
+			SpawnCount 10
+			WaitBeforeStarting 0
+			WaitBetweenSpawns 0
+		
+			TotalCurrency 50
+			RandomChoice
+			{
+				// Shuffle 1 [$SIGSEGV]
+				TFBot
+				{
+					Template T_TFBot_Sniper
+					// Action Sniper [$SIGSEGV]
+					Tag "popext_mission{ mission = MISSION_SNIPER }"
+					Tag "popext_actionpoint{
+						target = `-1536 5952 896`
+						repeats = 4 duration = 1 cooldown = 6
+						aimtarget = `ClosestPlayer`
+						alwayslook = 1 waituntildone = 1
+					}"
+					Tag "popext_fireinput{
+						target = `!self`,
+						action = `RunScriptCode`,
+						param = `self.SetOrigin(Vector(-2584, 5902, 688))`
+					}"
+					Tag "popext_changeattributes{
+						name = `mobbersniper`,
+						delay = 25
+					}"
+					Attributes DisableDodge
+					ItemAttributes
+					{
+						ItemName "TF_WEAPON_SNIPERRIFLE"
+						"damage bonus" 0.05
+					}
+					// InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-1536 5952 896" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 4 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Duration 1 // How long should the ai be interrupted
+					// 	Cooldown 6
+					// 	AimTarget "ClosestPlayer"
+					// 	AlwaysLook 1
+					// 	WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+					// }
+					// FireInput [$SIGSEGV]
+					// {
+					// 	Target "!self"
+					// 	Action "$SetLocalOrigin"
+					// 	Param  "-2584 5902 688"
+					// 	Delay  0
+					// 	CoolDown 999
+					// }
+					// ChangeAttributes [$SIGSEGV]
+					// {
+					// 	Name "mobbersniper"
+					// 	Delay 25
+					// 	Repeats 1
+					// }
+					EventChangeAttributes
+					{
+						mobbersniper
+						{
+							WeaponRestrictions MeleeOnly
+							ActionOverride Mobber [$SIGSEGV]
+							Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+							Tag "popext_mobber"
+						}
+					}
+				}
+				TFBot
+				{
+					Template T_TFBot_Sniper
+					// Action Sniper [$SIGSEGV]
+					Attributes DisableDodge
+					ItemAttributes
+					{
+						ItemName "TF_WEAPON_SNIPERRIFLE"
+						"damage bonus" 0.1
+					}
+					Tag "popext_mission{ mission = MISSION_SNIPER }"
+					Tag "popext_actionpoint{
+						target = `-1792 5952 896`
+						repeats = 4 duration = 1 cooldown = 6
+						aimtarget = `ClosestPlayer`
+						alwayslook = 1 waituntildone = 1
+					}"
+					Tag "popext_fireinput{
+						target = `!self`,
+						action = `RunScriptCode`,
+						param = `self.SetOrigin(Vector(-2584, 5902, 688))`
+					}"
+					Tag "popext_changeattributes{
+						name = `mobbersniper`,
+						delay = 25
+					}"
+					// InterruptAction [$SIGSEGV]    // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-1792 5952 896" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 4 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Duration 1 // How long should the ai be interrupted
+					// 	Cooldown 6
+					// 	AimTarget "ClosestPlayer"
+					// 	AlwaysLook 1
+					// 	WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+					// }
+					// FireInput [$SIGSEGV]
+					// {
+					// 	Target "!self"
+					// 	Action "$SetLocalOrigin"
+					// 	Param  "-2584 5902 688"
+					// 	Delay  0
+					// 	CoolDown 99
+					// }
+					// ChangeAttributes [$SIGSEGV]
+					// {
+					// 	Name "mobbersniper"
+					// 	Delay 25
+					// 	Repeats 1
+					// }
+					EventChangeAttributes
+					{
+						mobbersniper
+						{
+							WeaponRestrictions MeleeOnly
+							ActionOverride Mobber [$SIGSEGV]
+							Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+							Tag "popext_mobber"
+						}
+					}
+				}
+				TFBot
+				{
+					Template T_TFBot_Sniper
+					Action Sniper [$SIGSEGV]
+					Attributes DisableDodge
+					ItemAttributes
+					{
+						ItemName "TF_WEAPON_SNIPERRIFLE"
+						"damage bonus" 0.05
+					}
+					Tag "popext_mission{ mission = MISSION_SNIPER }"
+					Tag "popext_changeattributes{ name = `mobbersniper`, delay = 25 }"
+					Tag "popext_fireinput{
+						target = `!self`,
+						action = `RunScriptCode`,
+						param  = `self.SetOrigin(Vector(-2584, 5902, 688))`,
+					}"
+					Tag "popext_actionpoint{ target = `-2208 5920 704` }"
+					// InterruptAction [$SIGSEGV]    // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-2208 5920 704" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 4 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Duration 1 // How long should the ai be interrupted
+					// 	Cooldown 6
+					// 	AimTarget "ClosestPlayer"
+					// 	AlwaysLook 1
+					// 	WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+					// }
+					// FireInput [$SIGSEGV]
+					// {
+					// 	Target "!self"
+					// 	Action "$SetLocalOrigin"
+					// 	Param  "-2584 5902 688"
+					// 	Delay  0
+					// 	CoolDown 99
+					// }
+					// ChangeAttributes [$SIGSEGV]
+					// {
+					// 	Name "mobbersniper"
+					// 	Delay 25
+					// 	Repeats 1
+					// }
+					EventChangeAttributes
+					{
+						mobbersniper
+						{
+							WeaponRestrictions MeleeOnly
+							// ActionOverride Mobber [$SIGSEGV]
+							Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+							Tag "popext_mobber"
+						}
+					}
+				}
+				TFBot
+				{
+					Template T_TFBot_Sniper
+					// Action Sniper [$SIGSEGV]
+					Attributes DisableDodge
+					Tag "popext_mission{ mission = MISSION_SNIPER }"
+					Tag "popext_actionpoint{
+						target = `-1568 6208 704`
+						repeats = 4 duration = 1 cooldown = 6
+						aimtarget = `ClosestPlayer`
+						alwayslook = 1 waituntildone = 1
+					}"
+					ItemAttributes
+					{
+						ItemName "TF_WEAPON_SNIPERRIFLE"
+						"damage bonus" 0.05
+					}
+					// InterruptAction [$SIGSEGV]    // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-1568 6208 704" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+					// 	Delay 0 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 4 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Duration 1 // How long should the ai be interrupted
+					// 	Cooldown 6
+					// 	AimTarget "ClosestPlayer"
+					// 	AlwaysLook 1
+					// 	WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+					// }
+					// FireInput [$SIGSEGV]
+					// {
+					// 	Target "!self"
+					// 	Action "$SetLocalOrigin"
+					// 	Param  "-2584 5902 688"
+					// 	Delay  0
+					// 	CoolDown 99
+					// }
+					// ChangeAttributes [$SIGSEGV]
+					// {
+					// 	Name "mobbersniper"
+					// 	Delay 25
+					// 	Repeats 1
+					// }
+					EventChangeAttributes
+					{
+						mobbersniper
+						{
+							WeaponRestrictions MeleeOnly
+							// ActionOverride Mobber [$SIGSEGV]
+							Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+							Tag "popext_mobber"
+						}
+					}
+				}
+				
+				TFBot
+				{
+					Template T_TFBot_Sniper
+					// Action Sniper [$SIGSEGV]
+					Attributes DisableDodge
+					Tag "popext_mission{ mission = MISSION_SNIPER }"
+					Tag "popext_actionpoint{
+						target = `-1824 6272 704`
+						repeats = 4 
+						duration = 1 
+						cooldown = 6
+						aimtarget = `ClosestPlayer`
+						alwayslook = 1 
+						waituntildone = 1
+					}"
+					Tag "popext_fireinput{
+						target = `!self`,
+						action = `RunScriptCode`,
+						param = `self.SetOrigin(Vector(-2584, 5902, 688))`
+					}"
+					ItemAttributes
+					{
+						ItemName "TF_WEAPON_SNIPERRIFLE"
+						"damage bonus" 0.05
+					}
+					// InterruptAction [$SIGSEGV]    // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-1824 6272 704" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 4 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Duration 1 // How long should the ai be interrupted
+					// 	Cooldown 6
+					// 	AimTarget "ClosestPlayer"
+					// 	AlwaysLook 1
+					// 	WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+					// }
+					// FireInput [$SIGSEGV]
+					// {
+					// 	Target "!self"
+					// 	Action "$SetLocalOrigin"
+					// 	Param  "-2584 5902 688"
+					// 	Delay  0
+					// 	CoolDown 99
+					// }
+					// ChangeAttributes [$SIGSEGV]
+					// {
+					// 	Name "mobbersniper"
+					// 	Delay 25
+					// 	Repeats 1
+					// }
+					EventChangeAttributes
+					{
+						mobbersniper
+						{
+							WeaponRestrictions MeleeOnly
+							// ActionOverride Mobber [$SIGSEGV]
+							Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+							Tag "popext_mobber"
+						}
+					}
+				}
+				TFBot
+				{
+					Template T_TFBot_Sniper
+					Action Sniper [$SIGSEGV]
+					Attributes DisableDodge
+					Tag "popext_mission{ mission = MISSION_SNIPER }"
+					Tag "popext_actionpoint{
+						target = `-2016 6240 704`
+						repeats = 4 duration = 1 cooldown = 6
+						aimtarget = `ClosestPlayer`
+						alwayslook = 1 waituntildone = 1
+					}"
+					Tag "popext_fireinput{
+						target = `!self`,
+						action = `RunScriptCode`,
+						param = `self.SetOrigin(Vector(-2584, 5902, 688))`
+					}"
+					ItemAttributes
+					{
+						ItemName "TF_WEAPON_SNIPERRIFLE"
+						"damage bonus" 0.05
+					}
+					// InterruptAction [$SIGSEGV]    // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-2016 6240 704" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 4 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Duration 1 // How long should the ai be interrupted
+					// 	Cooldown 6
+					// 	AimTarget "ClosestPlayer"
+					// 	AlwaysLook 1
+					// 	WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+					// }
+					// FireInput [$SIGSEGV]
+					// {
+					// 	Target "!self"
+					// 	Action "$SetLocalOrigin"
+					// 	Param  "-2584 5902 688"
+					// 	Delay  0
+					// 	CoolDown 99
+					// }
+					// ChangeAttributes [$SIGSEGV]
+					// {
+					// 	Name "mobbersniper"
+					// 	Delay 25
+					// 	Repeats 1
+					// }
+					EventChangeAttributes
+					{
+						mobbersniper
+						{
+							WeaponRestrictions MeleeOnly
+							ActionOverride Mobber [$SIGSEGV]
+							Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+							Tag "popext_mobber"
+						}
+					}
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name "wavemainfocus_1"
+			WaitForAllDead ""
+			Where spawnbot_side_3
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 10
+			WaitBetweenSpawns 0
+			FirstSpawnWarningSound "mvm/giant_heavy/giant_heavy_entrance.wav"
+			TotalCurrency 100
+		
+			TFBot
+			{ 
+				Name	"Chief Technician"
+				// SpawnTemplate act1bossshit [$SIGSEGV]
+                // SpawnTemplate ringOwner [$SIGSEGV]
+				// FastUpdate 1 [$SIGSEGV]
+				ClassIcon 	engineer_hyper
+				Scale	1.7
+				Health 20000
+				Class	Engineer
+				Skill	Expert
+				// Action 	Mobber [$SIGSEGV]
+				Tag "popext_mobber"
+				Tag "popext_spawntemplate{ template = `act1bossshit` }"
+				Tag "popext_spawntemplate{ template = `ringOwner` }"
+				Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+				Tag "popext_changeattributes{name = `timefortherealfight`, ifhealthbelow = 19999}"
+				Tag "popext_addcond{cond = 51}"
+				Tag "popext_fireinput{
+					target = `!self`
+					action = `RunScriptCode`
+					param = `self.SetOrigin(Vector(-2048, 6624, 704))`
+				}"
+				Tag "popext_customattr{
+					attr = `move speed bonus`
+					value = 0.5
+					delay = 10
+				}"
+				Tag "popext_fireinput{
+					target = `tf_gamerules`
+					action = `PlayVO`
+					param = `vo/mvm/norm/engineer_mvm_dominationscout12.mp3`
+					delay = 2.5
+				}"
+				Tag "popext_fireinput{ 
+					target = `tf_gamerules`
+					action = `PlayVO`
+					param = `vo/mvm/norm/engineer_mvm_go03.mp3`
+					delay = 5
+				}"
+				Tag "popext_actionpoint{
+					target = `-2048 6624 704`,
+					duration = 1,
+					aimtarget = `-2035 7193 688`,
+					alwayslook = 1,
+				}"
+				Tag "popext_actionpoint{
+					target = `-5850 5279 512`delay = 10.1 duration = 1 aimtarget = `-5850 5279 512` alwayslook = 1 waituntildone = 1
+					output = { target = `point_populator_interface` action = `ChangeBotAttributes` param = `brosrelaxing` }
+				}"
+				Tag giant
+				WeaponRestrictions MeleeOnly
+				Attributes UseBossHealthBar
+				Attributes HoldFireUntilFullReload
+				MaxVisionRange 1500
+				Attributes	"MiniBoss"
+				Item	"The Rescue Ranger"
+				Item	"Hazard Handler"
+				Item	"Cargo Constructor"
+				Item	"The Eureka Effect"
+				// Item	"Rancho Relaxo Taunt"
+				ItemAttributes
+				{
+					ItemName "the rescue ranger"
+					"faster reload rate" 0.5
+					"fire rate bonus" 0.8
+					"clip size bonus" 2
+					"hold fire until full reload" 1 [$SIGSEGV]
+				}
+				CharacterAttributes
+				{
+					"damage force reduction"	0.5
+					"airblast vulnerability multiplier"	0.5
+					"override footstep sound set"	4
+					"voice pitch scale"	0.75
+					"engy building health bonus" 5
+					"engineer sentry build rate multiplier" 7
+					"engy disposable sentries" 5
+					"displace touched enemies" 1 [$SIGSEGV]
+					"no_jump" 1
+					"move speed bonus" 0.001
+				}
+				// AddAttribute [$SIGSEGV]
+				// {
+				// 	Item "player"
+				// 	Name "move speed bonus"
+				// 	Value 0.5
+				// 	Delay 10
+				// }
+				// ChangeAttributes [$SIGSEGV]
+                // {
+                //     Name "timefortherealfight"
+                //     Delay 0
+                //     Repeats 1
+				// 	IfHealthBelow 19999
+                // }
+				// InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+				// {
+				// 	Target "-2048 6624 704" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+				// 	Delay 0 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+				// 	Repeats 1 // How many times should bot do the task in total (Default: 0 - Infinite)
+				// 	Duration 1 // How long should the ai be interrupted
+				// 	Cooldown 0
+				// 	AimTarget -2035 7193 688
+				// 	AlwaysLook 1
+				// 	WaitUntilDone 0 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+				// }
+				// InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+				// {
+				// 	Target "-5850 5279 512" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+				// 	Delay 10.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+				// 	Repeats 1 // How many times should bot do the task in total (Default: 0 - Infinite)
+				// 	Duration 1 // How long should the ai be interrupted
+				// 	Cooldown 0
+				// 	WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+				// 	OnDoneChangeAttributes "brosrelaxing"
+				// }
+				// FireInput [$SIGSEGV]
+                // {
+                //     Target "!self"
+                //     Action "$PlaySequence"
+                //     Param  "taunt_highFiveStart"
+                //     Delay  5
+                //     Cooldown 9999
+                // }
+				
+				// FireInput [$SIGSEGV]
+                // {
+                //     Target "tf_gamerules"
+                //     Action "PlayVO"
+                //     Param  "vo\mvm\norm\engineer_mvm_go03.mp3"
+                //     Delay  5
+                //     Cooldown 9999
+                // }
+				// FireInput [$SIGSEGV]
+                // {
+                //     Target "tf_gamerules"
+                //     Action "PlayVO"
+                //     Param  "vo\mvm\norm\engineer_mvm_dominationscout12.mp3"
+                //     Delay  2.5
+                //     Cooldown 9999
+                // }
+				// AddCond [$SIGSEGV]
+				// {
+				// 	Index 51
+				// }
+				// FireInput [$SIGSEGV]
+				// {
+				// 	Target "!self"
+				// 	Action "$SetLocalOrigin"
+				// 	Param  "-2048 6624 704"
+				// 	Delay  0
+				// 	cooldown 99999
+				// }
+				EventChangeAttributes
+				{
+					brosrelaxing
+					{
+
+						Tag "popext_taunt{
+							delay = 1
+							id = ID_RANCHO_RELAXO_TAUNT
+						}"
+						Tag "popext_fireinput{
+							target = `!self`
+							action = `RunScriptCode`
+							param = `self.SetOrigin(Vector(-4940, 1789, 536))`
+							delay = 0
+							cooldown = 99999
+						}"
+						Tag "popext_fireinput{
+							target = `!self`
+							action = `RunScriptCode`
+							param = `self.RemoveCond(51)`
+						}"
+						// Taunt [$SIGSEGV]    //Taunt periodically
+						// {
+						// 	Delay 1 //Time before the first taunt starts (Default: 10)
+						// 	Cooldown 1 //Time between each taunt (Default: 10)
+						// 	Repeats 1 //How many times the bot should taunt in total (Default: 0 - Infinite)
+						// 	Duration 999 //Duration of a looping taunt (Default: 0.1)
+						// 	Name "Rancho Relaxo Taunt"
+						// }
+						// FireInput [$SIGSEGV]
+						// {
+						// 	Target "!self"
+						// 	Action "$SetLocalOrigin"
+						// 	Param  "-4940 1789 536"
+						// 	Delay  0
+						// 	cooldown 99999
+						// }
+						// FireInput [$SIGSEGV]
+						// {
+						// 	Target "!self"
+						// 	Action "$RemoveCond"
+						// 	Param  "51"
+						// 	Delay  0
+						// 	cooldown 99999
+						// }
+						// Taunt [$SIGSEGV]    //Taunt periodically
+						// {
+						// 	Delay 6 //Time before the first taunt starts (Default: 10)
+						// 	Cooldown 1 //Time between each taunt (Default: 10)
+						// 	Repeats 1 //How many times the bot should taunt in total (Default: 0 - Infinite)
+						// 	Duration 999 //Duration of a looping taunt (Default: 0.1)
+						// }
+					}
+					timefortherealfight
+					{
+						Tag "popext_fireinput{
+							target = `nowtherealfightbegins`
+							action = `Trigger`
+						}"
+						Tag "popext_fireinput{
+							target = `!self`
+							action = `RunScriptCode`
+							param = `self.StopTaunt(false)`
+							delay = 0.25
+						}"
+						Tag "popext_changeattributes{
+							name = `vsboss`
+							delay = 8
+						}"
+						// FireInput [$SIGSEGV]
+						// {
+						// 	Target "nowtherealfightbegins"
+						// 	Action Trigger
+						// 	Delay 0
+						// 	Cooldown 99999
+						// }
+						// FireInput [$SIGSEGV]
+                        // {
+                        //     Target "!self"
+                        //     Action "RunScriptCode"
+                        //     Param "self.StopTaunt(false);"
+                        //     Delay 0.25
+                        // }
+						// ChangeAttributes [$SIGSEGV]
+						// {
+						// 	Name "vsboss"
+						// 	Delay 8
+						// }
+						
+					}
+					vsboss
+					{
+						Tag "popext_weaponswitch{
+							slot = SLOT_PRIMARY
+						}"
+						Tag "popext_weaponswitch{
+							slot = SLOT_SECONDARY
+							delay = 7
+						}"
+						Tag "popext_changeattributes{
+							name = `shockwaveForNoobs`
+							delay = 12
+						}"
+						Tag "popext_actionpoint{
+							target = `-5067 1783 536`
+							repeats = 99
+							cooldown = 5
+							duration = 5
+							distance = 50
+						}"
+						// WeaponSwitch [$SIGSEGV]
+						// {
+						// 	Delay 0
+						// 	Cooldown 14
+						// 	Repeats 1
+						// 	Type "Primary"
+						// }
+						// WeaponSwitch [$SIGSEGV]
+						// {
+						// 	Delay 7
+						// 	Cooldown 14
+						// 	Repeats 1
+						// 	Type "Secondary"
+						// }
+						// ChangeAttributes [$SIGSEGV]
+						// {
+						// 	Name "shockwaveForNoobs"
+						// 	Delay 12
+						// }
+						// InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+						// {
+						// 	Target "-5067 1783 536" // Move target location
+						// 	Name "a" // Name of the interrupt action. When the task is done, bot's $OnActionDone output is fired with name as parameter
+						// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+						// 	Repeats 99 // How many times should bot do the task in total (Default: 0 - Infinite)
+						// 	Cooldown 5 //Time between each task (Default: 10)
+						// 	Duration 5 // How long should the ai be interrupted
+							
+						// 	Distance 50 // How close should bot move to the target (Default: 0)
+						// }
+					}
+                    shockwaveForNoobs
+                    {
+						Tag "popext_ringoffire{
+							damage = 10
+							interval = 1
+							radius = 50
+						}"
+						Tag "popext_weaponswitch{
+							slot = SLOT_MELEE
+							cooldown = 10
+							repeats = 1
+						}"
+						Tag "popext_fireinput{
+							target = `ring_maker`
+							action = `ForceSpawn`
+							delay = 2.5
+							cooldown = 2
+							repeats = 2
+						}"
+						Tag "popext_playsequence{
+							sequence = `taunt_drg_melee`
+							delay = 0.5
+							cooldown = 2
+							repeats = 2
+						}"
+						Tag "popext_changeattributes{
+							name = `vsboss`
+							delay = 7
+						}"
+						// WeaponSwitch [$SIGSEGV]
+                        // {
+                        //     Delay 0
+                        //     Cooldown 10
+                        //     Repeats 1
+                        //     Type "Melee"
+                        // }
+                        // FireInput [$SIGSEGV]
+                        // {
+                        //     Target "ring_maker"
+                        //     Action "ForceSpawn"
+                        //     Delay 2.5 //Time before the first fire input starts (Default: 10)
+                        //     Cooldown 2 //Time between each fire input (Default: 10)
+                        //     Repeats 2 //How many times should bot use the fire input in total (Default: 0 - Infinite)
+							
+                        // }
+						// FireInput [$SIGSEGV]
+						// {
+						// 	Target "!self"
+						// 	Action "$PlaySequence"
+						// 	Param  "taunt_drg_melee"
+						// 	Delay  0.5
+						// 	Cooldown 2
+						// 	Repeats 2
+						// }
+						// ChangeAttributes [$SIGSEGV]
+						// {
+						// 	Name "vsboss"
+						// 	Delay 7
+						// }
+                    }
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name "w1a"
+			WaitForAllSpawned "wavemainfocus_1"
+			Where spawnbot_side_3
+			TotalCount 3
+			MaxActive 2
+			SpawnCount 1
+			WaitBeforeStarting 10
+			WaitBetweenSpawns 12
+		
+			TotalCurrency 50
+		
+			TFBot
+			{ 
+				Template T_TFBot_Giant_Soldier
+				// Action Mobber
+				Tag "popext_mobber"
+			}
+		}
+		WaveSpawn
+		{
+			Name "w1a"
+			WaitForAllDead "wavemainfocus"
+			Where spawnbot_side_3
+			TotalCount 20
+			MaxActive 10
+			SpawnCount 5
+			WaitBeforeStarting 0
+			WaitBetweenSpawns 6
+		
+			TotalCurrency 50
+		
+			TFBot
+			{
+				Template	T_TFBot_Scout_Melee
+				ClassIcon scout_bat_nys
+				// Action Mobber
+				Tag "popext_mobber"
+			}
+		}
+		WaveSpawn
+		{
+			Name "disablewavespawn"
+			WaitForAllDead ""
+			Where spawnbot_side_2
+			TotalCount 7
+			MaxActive 7
+			SpawnCount 7
+			WaitBeforeStarting 4
+			WaitBetweenSpawns 0
+		
+			TotalCurrency 50
+			Squad
+			{
+				TFBot
+				{ 
+					Template T_TFBot_Giant_Heavyweapons
+					// Action Mobber
+					Tag "popext_mobber"
+					Tag giant
+					MaxVisionRange 900
+					Skill Easy
+					Tag "popext_spawntemplate{
+						template = `iguessihavetodothis`
+						attachment = `flag`
+					}"
+					Tag "popext_spawntemplate{ template = `kaboom` }"
+					Tag "popext_actionpoint{
+						target = `-2265 8308 683`
+						duration = 2
+						waituntildone = true
+						output = {
+							target = `point_populator_interface`
+							action = `ChangeBotAttributes`
+							param = `deploybomb`
+						}
+					}"
+					// SpawnTemplate { Name iguessihavetodothis Bone bip_spine_2 } [$SIGSEGV]
+					// SpawnTemplate [$SIGSEGV]
+					// {
+						// Name "kaboom"
+					// }
+					
+					// InterruptAction [$SIGSEGV]    // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-2265 8308 683" // Entity / bot / class name as an alternative. Also: RandomEnemy, ClosestPlayer // Attack aim target (Default: 0)
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 1 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Duration 2 // How long should the ai be interrupted
+					// 	Cooldown 0
+					// 	WaitUntilDone 1 // If set, duration timer only starts when the bot moves to the target location or the aim target is killed (Default: 0)
+					// 	OnDoneChangeAttributes "deploybomb"
+					// }
+					EventChangeAttributes
+					{
+						deploybomb
+						{
+							// ActionOverride Idle [$SIGSEGV]
+							Attributes IgnoreEnemies
+							CharacterAttributes
+							{
+								"move speed bonus" 0.001
+								"no_jump" 1
+							}
+							Tag "popext_playsequence{ sequence = `melee_deploybomb` }"
+							Tag "popext_fireinput{
+								target = `tf_gamerules`
+								action = `PlayVO`
+								param = `mvm/mvm_deploy_giant.wav`
+							}"
+							Tag "popext_fireinput{
+								target = `tf_gamerules`
+								action = `PlayVO`
+								param = `items/cart_explode.wav`
+								delay = 2
+							}"
+							Tag "popext_fireinput{
+								target = `redlose_relay`
+								action = `trigger`
+								delay = 2
+							}"
+							Tag "popext_fireinput{
+								target = `emp_tank_down`
+								action = `start`
+								delay = 2
+							}"
+							Tag "popext_fireinput{
+								target = `!self`
+								action = `RunScriptCode`
+								param = `self.TakeDamage(INT_MAX, DMG_BLAST, self)`
+								delay = 2.1
+							}"
+							// FireInput [$SIGSEGV]
+							// {
+							// 	Target "!self"
+							// 	Action "$PlaySequence"
+							// 	Param  "melee_deploybomb"
+							// 	Delay  0
+							// 	Cooldown 9999
+							// }
+							// FireInput [$SIGSEGV]
+							// {
+							// 	Target "tf_gamerules"
+							// 	Action "PlayVO"
+							// 	Param  "mvm\mvm_deploy_giant.wav"
+							// 	Delay  0
+							// 	Cooldown 9999
+							// }
+							// FireInput [$SIGSEGV]
+							// {
+							// 	Target "tf_gamerules"
+							// 	Action "PlayVO"
+                            //     Param "items\cart_explode.wav"
+							// 	Delay  2
+							// 	Cooldown 9999
+							// }
+                            // FireInput [$SIGSEGV]
+							// {
+							// 	Target "redlose_relay"
+							// 	Action "trigger"
+							// 	Delay  2
+							// 	Cooldown 9999
+							// }
+                            // FireInput [$SIGSEGV]
+							// {
+							// 	Target "emp_tank_down"
+							// 	Action "start"
+							// 	Delay  2
+							// 	Cooldown 9999
+							// }
+                            // FireInput [$SIGSEGV]
+							// {
+							// 	Target "!self"
+							// 	Action "$Suicide"
+							// 	Delay  2.1
+							// 	Cooldown 9999
+							// }
+						}
+					}
+				}
+				TFBot
+				{
+					Template T_TFBot_Medic_BigHeal
+				}
+				TFBot
+				{
+					Template T_TFBot_Medic_BigHeal
+				}
+				TFBot
+				{
+					Template T_TFBot_Medic_BigHeal
+				}
+				TFBot
+				{
+					Template T_TFBot_Demo_Burst
+				}
+				TFBot
+				{
+					Template T_TFBot_Demo_Burst
+				}
+				TFBot
+				{
+					Template T_TFBot_Demo_Burst
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name	"bosssupport"
+			WaitForAllSpawned	disablewavespawn
+			TotalCurrency	50
+			TotalCount	30
+			MaxActive	12
+			SpawnCount	2
+			WaitBeforeStarting	15
+			WaitBetweenSpawns	3
+			Where	spawnbot_side_2
+			Squad
+			{
+				NoWaitForFormation 1 [$SIGSEGV]
+				TFBot
+				{
+					Health	125
+					Name	Scout
+					Class	Scout
+					Skill	Easy
+                    // Action Mobber
+					Tag "popext_mobber"
+					ExtAttr IgnoreNPC [$SIGSEGV]
+				}
+				TFBot
+				{
+					ClassIcon pyro_dragon_fury_swordstone
+					Name "Dragon's Fury Pyro"
+					Class Pyro
+					Skill Easy
+					Item "The Dragon's Fury"
+					MaxVisionRange 700
+					ExtAttr IgnoreNPC [$SIGSEGV]
+                    // Action Mobber
+					Tag "popext_mobber"
+					CharacterAttributes
+					{
+						"airblast disabled" 1
+					}
+				}
+			}
+		}
+		WaveSpawn // Tank # HP
+		{
+			Name "postblastdoorkill"
+			WaitForAllDead ""
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 4
+			WaitBetweenSpawns 0
+			TotalCurrency 150
+			FirstSpawnOutput
+			{
+				Target "bignet"
+				Action "runscriptcode"
+				Param "
+					IncludeScript(`tank_repair`)
+					PopExt.AddTankName(`tankboss`, {
+						Icon = `tank_drill_lite`
+						DisableBomb = true
+						SpawnTemplate = `DrillTankV2`
+						Model = {
+							Default = `models/watermine/drill_tank.mdl`
+							Damage1 = `models/watermine/drill_tank_damage1.mdl`
+							Damage2 = `models/watermine/drill_tank_damage2.mdl`
+							Damage3 = `models/watermine/drill_tank_damage3.mdl`
+						}
+					})
+				"
+			}
+			Tank
+			{
+				Name "tankboss"
+				StartingPathTrackNode "extratankpath1_1" //tankd_path_1
+				Health 27000
+				Speed 60
+				Skin 0
+				ClassIcon         tank_drill_lite [$SIGSEGV]
+				SpawnTemplate	DrillTankV2 [$SIGSEGV]
+				PingSound "ambient/levels/citadel/zapper_warmup1.wav" [$SIGSEGV]
+				DisableBomb 1 [$SIGSEGV]
+				Model [$SIGSEGV]
+				{
+					Default "models/watermine/drill_tank.mdl"
+					Damage1 "models/watermine/drill_tank_damage1.mdl"
+					Damage2 "models/watermine/drill_tank_damage2.mdl"
+					Damage3 "models/watermine/drill_tank_damage3.mdl"
+				}
+				OnKilledOutput {
+					Target bignet
+					Action RunScriptCode
+					Param "delete PopExt._TankRepair"
+				}
+				OnBombDroppedOutput
+				{
+					Target boss_deploy_relay
+					Action Trigger
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name	tanksupport
+			WaitForAllSpawned postblastdoorkill
+			TotalCurrency	100
+			TotalCount	60
+			MaxActive	40
+			SpawnCount	1
+			WaitBeforeStarting	6
+			WaitBetweenSpawns	1
+			Where	spawnbot_side_1
+			
+			RandomChoice
+			{
+					Shuffle 1 [$SIGSEGV]
+					TFBot
+					{
+						ClassIcon	engineer
+						Health	125
+						Name	"Maintenance Crew"
+						Class	Engineer
+						Skill	Normal
+						WeaponRestrictions	PrimaryOnly
+						Item	"the data mining light"
+						// Action Mobber
+						Tag "popext_mobber"
+					}
+				
+					TFBot
+					{
+						ClassIcon	engineer
+						Health	125
+						Name	"Maintenance Crew"
+						Class	Engineer
+						Skill	Expert
+						WeaponRestrictions	MeleeOnly
+						Attributes AlwaysFireWeapon
+						Item	"the data mining light"
+						// Action Mobber
+						Tag "popext_mobber"
+						Tag "popext_actionpoint{
+							target = `repair_here`
+							duration = 999
+							aimtarget = `repair_here`
+							killaimtarget = IN_ATTACK
+						}"
+						// InterruptAction [$SIGSEGV]    // Stop current bot ai and force the bot to move to a location
+						// {
+						// 	Target "repair_here" // Move target location
+						// 	Name "a" // Name of the interrupt action. When the task is done, bot's $OnActionDone output is fired with name as parameter
+						// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+						// 	Repeats 1 // How many times should bot do the task in total (Default: 0 - Infinite)
+						// 	Duration 999 // How long should the ai be interrupted
+						// 	AimTarget "repair_here"
+						// 	KillAimTarget 1
+						// 	Distance 50 // How close should bot move to the target (Default: 0)
+						// }
+					}
+				
+					TFBot
+					{
+						ClassIcon	engineer
+						Health	125
+						Name	"Maintenance Crew"
+						Class	Engineer
+						Skill	Normal
+						WeaponRestrictions	PrimaryOnly
+						Item	"The Rescue Ranger"
+						Item	"the data mining light"
+						// Action Mobber
+						Tag "popext_mobber"
+					}
+				
+			}
+		}
+		WaveSpawn
+		{
+			Name	tanksupport
+			WaitForAllSpawned postblastdoorkill
+			Where spawnbot_side_1
+			TotalCount 3
+			MaxActive 3
+			SpawnCount 1
+			WaitBeforeStarting 7
+			WaitBetweenSpawns 25
+		
+			TotalCurrency 50
+		
+			TFBot
+			{
+				Health	2500
+				Name	"Giant Widowmaker Engineer"
+				Scale	1.7
+				ClassIcon 	engineer_widowmaker_nys_giant
+				Class	Engineer
+				Skill	Expert
+				Action 	Mobber [$SIGSEGV]
+				ExtAttr IgnoreBuildings [$SIGSEGV]
+				Tag "popext_mobber"
+				Tag "popext_ignore{ flags = TFBOT_IGNORE_ENEMY_SENTRY_GUNS }"
+				WeaponRestrictions	PrimaryOnly
+				MaxVisionRange 900
+				Attributes	"HoldFireUntilFullReload"
+				Attributes	"MiniBoss"
+				Item	"the widowmaker"
+				Item	"tf_weapon_pistol"
+				Item	"tf_weapon_wrench"
+				Tag giant
+				CharacterAttributes
+				{
+					"move speed bonus"	0.5
+					"damage force reduction"	0.5
+					"airblast vulnerability multiplier"	0.5
+					"override footstep sound set"	4
+					"voice pitch scale"	0
+					"fire rate bonus" 1.15
+				}
+			}
+		}
+		WaveSpawn 
+		{
+			Name "protectthishit"
+			WaitForAllDead "postblastdoorkill"
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 10
+			WaitBetweenSpawns 0
+			Support Limited
+			TotalCurrency 0
+			Tank
+			{
+				Name "emp_tank"
+				ClassIcon tank_red_lite [$SIGSEGV]
+				StartingPathTrackNode extratankpath2_1 //emp_tank_path_1
+				Health 40000
+				Speed 75
+				Skin 0
+				TeamNum 2 [$SIGSEGV]
+				DisableBomb 1 [$SIGSEGV]
+				DisableChildModels 1 [$SIGSEGV]
+				SpawnTemplate temp [$SIGSEGV]
+				Model [$SIGSEGV]
+				{
+					Default "models/empty.mdl"
+				}
+				OnKilledOutput 
+				{
+					Target redlose_relay
+					Action RunScriptCode
+					Param "
+						delete PopExt._TankRepair
+						EntFire(`redlose_relay`, `Trigger`)
+					"
+				}
+				OnBombDroppedOutput
+				{
+					Target boss_deploy_relay
+					Action Trigger
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name "thiswillopenthedoor"
+			WaitForAllDead "postblastdoorkill"
+			Where spawnbot_side_3
+			TotalCount 2
+			MaxActive 2
+			SpawnCount 1
+			WaitBeforeStarting 20
+			WaitBetweenSpawns 20
+		
+			TotalCurrency 25
+		
+			TFBot
+			{
+				Class		Pyro
+				ClassIcon	pyro_phlog
+				Name		"Giant Phlogistinator Pyro"
+				ClassIcon	pyro_phlog_v2_giant
+				Health		3300
+				Skill		Expert
+				Attributes	MiniBoss
+				Tag			giant
+				Item		"The Phlogistinator"
+				Item		"Brigade Helm"
+                Action      Mobber [$SIGSEGV]
+				Tag "popext_mobber"
+				Tag "popext_actionpoint{
+					delay = 0.5
+					target = `emp_tank`
+					aimtarget = `emp_tank`
+					killaimtarget = IN_ATTACK
+					duration = 999
+				}"
+
+				ItemAttributes
+				{
+					ItemName			"The Phlogistinator"
+					"airblast disabled"	0
+				}
+
+				CharacterAttributes
+				{
+					"move speed bonus"					0.5
+					"damage force reduction"			0.5
+					"airblast vulnerability multiplier"	0.5
+					"override footstep sound set"		6
+				}
+				// InterruptAction [$SIGSEGV]
+				// {
+				//     Delay 0.5
+				// 	Target "emp_tank"
+                //     AimTarget "emp_tank"
+                //     KillAimTarget 1
+				// 	Duration 999
+				// }
+			}
+		}
+		WaveSpawn
+		{
+			Name				"thiswillopenthedoor"
+			WaitForAllDead 		"postblastdoorkill"
+			Where				spawnbot_side_1
+			TotalCount			4
+			MaxActive			2
+			SpawnCount			2
+			WaitBeforeStarting	0
+			WaitBetweenSpawns	20
+			TotalCurrency		25
+
+			TFBot
+			{
+				Template			T_TFBot_Giant_Scout
+				WeaponRestrictions	MeleeOnly
+				Name				"Giant Wrecking Crew"
+				ClassIcon			scout_homewrecker
+				Item				"Hazard Handler"
+				Item				"The Homewrecker"
+				Action				Mobber [$SIGSEGV]
+				Tag "popext_mobber"
+				Tag "popext_actionpoint{
+					delay = 0.5
+					target = `emp_tank`
+					aimtarget = `emp_tank`
+					killaimtarget = IN_ATTACK
+					duration = 999
+				}"
+				Tag "popext_customattr{attr `mult dmg vs tanks`, value = 2.5}"
+				CharacterAttributes
+				{
+					"dmg pierces resists absorbs"	1
+					"cancel falling damage"			1
+					"mult dmg vs tanks" 2.5 [$SIGSEGV]
+				}
+				// InterruptAction [$SIGSEGV]
+				// {
+				//     Delay 0.5
+				// 	Target "emp_tank"
+                //     AimTarget "emp_tank"
+                //     KillAimTarget 1
+				// 	Duration 999
+				// }
+			}
+		}
+        WaveSpawn
+		{
+			Name	        "postblastdoorkillSupport"
+			WaitForAllDead	"postblastdoorkill"
+			TotalCurrency	50
+			TotalCount	    20
+			MaxActive	    10
+			SpawnCount	    4
+			WaitBeforeStarting	8
+			WaitBetweenSpawns	8
+            Where	spawnbot_side_1
+            //Randomspawn 1
+			
+            TFBot
+            {
+                Template	T_TFBot_Soldier_RocketShotgun
+                // Action Mobber
+				Tag "popext_mobber"
+            }			
+		}
+		WaveSpawn
+		{
+			Name "finalpush"
+			WaitForAllSpawned ""
+			Where spawnbot_07
+			TotalCount 20
+			MaxActive 8
+			SpawnCount 2
+			WaitBeforeStarting 0
+			WaitBetweenSpawns 8
+			TotalCurrency 50
+		
+			TFBot
+			{ 
+                Template T_TFBot_Sniper_Huntsman 
+				MaxVisionRange 900 
+				// Action Mobber
+				Tag "popext_mobber"
+				Tag "popext_actionpoint{
+					target = `-5067 1783 536`
+					repeats = 99
+					cooldown = 5
+					duration = 5
+				}"
+			    // InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+				// {
+				// 	Target "-5067 1783 536" // Move target location
+				// 	Name "a" // Name of the interrupt action. When the task is done, bot's $OnActionDone output is fired with name as parameter
+				// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+                //     Repeats 99 // How many times should bot do the task in total (Default: 0 - Infinite)
+                //     Cooldown 5 //Time between each task (Default: 10)
+				// 	Duration 5 // How long should the ai be interrupted
+					
+				// 	Distance 50 // How close should bot move to the target (Default: 0)
+				// }
+			}
+		}
+        WaveSpawn
+        {
+            Name "defendthefuckingpoint"
+            WaitForAllDead "wavemainfocus_1"
+            Where spawnbot_07
+            TotalCount 20
+            MaxActive 8
+            SpawnCount 2
+            WaitBeforeStarting 0
+            WaitBetweenSpawns 3
+        
+            TotalCurrency 50
+			RandomChoice
+			{
+				Shuffle 1 [$SIGSEGV]
+				TFBot
+				{ 
+					Class Soldier
+					UseBestWeapon 1 [$SIGSEGV]
+					ClassIcon 		soldier_shotgun2
+					Item "tf_weapon_rocketlauncher"
+					Attributes HoldFireUntilFullReload
+					// Action Mobber
+					Tag "popext_usebestweapon"
+					Tag "popext_mobber"
+					Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+					// Tag "popext_spawnhere{ where = `red_spawn_2`, spawn_uber_duration = 0.0 }"
+					Tag "popext_spawnhere{ where = `-2329 1542 512`, spawn_uber_duration = 0.0 }"
+					Tag "popext_actionpoint{
+						target = `-5067 1783 536`
+						repeats = 99
+						cooldown = 5
+						duration = 5
+					}"
+					CharacterAttributes
+					{
+						"deploy time decreased" 0.5
+					}
+					// InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-5067 1783 536" // Move target location
+					// 	Name "a" // Name of the interrupt action. When the task is done, bot's $OnActionDone output is fired with name as parameter
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 99 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Cooldown 5 //Time between each task (Default: 10)
+					// 	Duration 5 // How long should the ai be interrupted
+						
+					// 	Distance 50 // How close should bot move to the target (Default: 0)
+					// }
+				}
+				TFBot
+				{ 
+					Class Soldier
+					UseBestWeapon 1 [$SIGSEGV]
+					ClassIcon 		soldier_shotgun2
+					Item "The Reserve Shooter"
+					WeaponRestrictions SecondaryOnly
+					Attributes HoldFireUntilFullReload
+					// Action Mobber
+					Tag "popext_mobber"
+					Tag "popext_usebestweapon"
+					Tag "popext_actionpoint{
+						target = `-5067 1783 536`
+						repeats = 99
+						cooldown = 5
+						duration = 5
+					}"
+					CharacterAttributes
+					{
+						"deploy time decreased" 0.5
+					}
+					// InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-5067 1783 536" // Move target location
+					// 	Name "a" // Name of the interrupt action. When the task is done, bot's $OnActionDone output is fired with name as parameter
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 99 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Cooldown 5 //Time between each task (Default: 10)
+					// 	Duration 5 // How long should the ai be interrupted
+						
+					// 	Distance 50 // How close should bot move to the target (Default: 0)
+					// }
+				}
+			}
+            
+        }
+		WaveSpawn
+		{
+			Name "finalpush_2"
+			WaitForAllDead "wavemainfocus_1"
+			Where spawnbot_07
+			TotalCount 24
+			MaxActive 16
+			SpawnCount 6
+			WaitBeforeStarting 0
+			WaitBetweenSpawns 10
+		
+			TotalCurrency 100
+			Squad
+			{
+				TFBot
+				{ 
+					Template T_TFBot_Giant_Soldier_Spammer 
+					// Action Mobber
+					Tag "popext_mobber"
+					Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+					// Tag "popext_spawnhere{ where = `red_spawn`, spawn_uber_duration = 0.0 }"
+					Tag "popext_spawnhere{ where = `-1953 1069 512`, spawn_uber_duration = 0.0 }"
+					Tag "popext_actionpoint{
+						target = `-1504 2303 511`
+						aimtarget = `tank_boss`
+						killaimtarget = IN_ATTACK
+						duration = 10
+						waituntildone = true
+						distance = 10
+					}"
+					// InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+					// {
+					// 	Target "-1504 2303 511" // Move target location
+					// 	Name "a" // Name of the interrupt action. When the task is done, bot's $OnActionDone output is fired with name as parameter
+					// 	AimTarget "tank_boss"
+					// 	KillAimTarget 1
+					// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+					// 	Repeats 1 // How many times should bot do the task in total (Default: 0 - Infinite)
+					// 	Cooldown 0 //Time between each task (Default: 10)
+					// 	Duration 10 // How long should the ai be interrupted
+					// 	WaitUntilDone 1
+					// 	Distance 0 // How close should bot move to the target (Default: 0)
+					// }
+				}
+				TFBot
+				{ 
+					Class Soldier
+					ClassIcon 		soldier_shotgun2
+					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+					WeaponRestrictions SecondaryOnly
+					Attributes HoldFireUntilFullReload
+					// Action Mobber
+					Tag "popext_mobber"
+					Skill Easy
+				}
+				TFBot
+				{ 
+					Class Soldier
+					ClassIcon 		soldier_shotgun2
+					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+					WeaponRestrictions SecondaryOnly
+					Attributes HoldFireUntilFullReload
+					// Action Mobber
+					Tag "popext_mobber"
+					Skill Easy
+				}
+				TFBot
+				{ 
+					Class Soldier
+					ClassIcon 		soldier_shotgun2
+					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+					WeaponRestrictions SecondaryOnly
+					Attributes HoldFireUntilFullReload
+					// Action Mobber
+					Tag "popext_mobber"
+					Skill Easy
+				}
+				TFBot
+				{ 
+					Class Soldier
+					ClassIcon 		soldier_shotgun2
+					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+					WeaponRestrictions SecondaryOnly
+					Attributes HoldFireUntilFullReload
+					// Action Mobber
+					Tag "popext_mobber"
+					Skill Easy
+				}
+				TFBot
+				{ 
+					Class Soldier
+					ClassIcon 		soldier_shotgun2
+					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+					WeaponRestrictions SecondaryOnly
+					Attributes HoldFireUntilFullReload
+					// Action Mobber
+					Tag "popext_mobber"
+					Skill Easy
+				}
+			}
+			
+		}
+		WaveSpawn
+		{
+			Name "finalpush_final1"
+			WaitForAllSpawned "finalpush_2"
+			Where spawnbot_07
+			TotalCount 21
+			MaxActive 15
+			SpawnCount 3
+			WaitBeforeStarting 0
+			WaitBetweenSpawns 5
+		
+			TotalCurrency 50
+		
+			TFBot
+			{ 
+				Template T_TFBot_Demo_Burst 
+				// Action Mobber
+				Tag "popext_mobber"
+				Tag "popext_mission{ mission = MISSION_SEEK_AND_DESTROY }"
+				// Tag "popext_spawnhere{ where = `red_spawn`, spawn_uber_duration = 0.0 }"
+				Tag "popext_spawnhere{ where = `-1953 1069 512`, spawn_uber_duration = 0.0 }"
+				Tag "popext_actionpoint{
+					target = `-1504 2303 511`
+					repeats = 2
+					duration = 5
+				}"
+				// InterruptAction [$SIGSEGV]   // Stop current bot ai and force the bot to move to a location
+				// {
+				// 	Target "-1504 2303 511" // Move target location
+				// 	Name "a" // Name of the interrupt action. When the task is done, bot's $OnActionDone output is fired with name as parameter
+				// 	Delay 0.1 // Time before the first task starts. Must be above 0, or it will not execute (Default: 10)
+				// 	Repeats 2 // How many times should bot do the task in total (Default: 0 - Infinite)
+				// 	Cooldown 0 //Time between each task (Default: 10)
+				// 	Duration 5 // How long should the ai be interrupted
+					
+				// 	Distance 50 // How close should bot move to the target (Default: 0)
+				// }
+			}
+		}
+        WaveSpawn
+		{
+			Name "lol"
+			
+			Where spawnbot_07
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 99999999999999999999
+			WaitBetweenSpawns 10
+            // HideIcon 1 [$SIGSEGV]
+			TotalCurrency 0
+		
+			TFBot
+			{
+				Template T_TFBot_Heavyweapons_Gnome
+			}
+		}
+    }
+}
