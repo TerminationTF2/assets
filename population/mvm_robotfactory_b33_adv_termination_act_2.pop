@@ -3830,7 +3830,7 @@ population
 			Action	runscriptcode
 			Param "
 			EntFire(`Wave1Relay`, `Trigger`)
-			IncludeScript(`termination_bonefollowers`)
+			//IncludeScript(`termination_bonefollowers`)
 			Convars.SetValue(`tf_playergib`, 0)
 			"
 		}
@@ -5842,6 +5842,7 @@ population
 				Attributes SuppressFire
 				Attributes UseBossHealthBar
 				Action Idle
+				Tag "bot_grey_train_hook"
 				AddCond { Name TF_COND_STEALTHED_USER_BUFF_FADING } 
 				StripItemSlot 0
 				StripItemSlot 1
@@ -5948,6 +5949,7 @@ population
 			Target wave_start_relay // gamerules or tf_gamerules, depending on the map
 			Action RunScriptCode
 			Param "
+				IncludeScript(`mvm_robotfactory_b33_adv_termination_act_2_scripts`, getroottable())
 				EntFire(`oleada4`, `Trigger`)
 				Convars.SetValue(`tf_playergib`, 0)
 			"
@@ -6549,7 +6551,6 @@ population
 				}
 			
 		}
-
 		WaveSpawn
 		{
 			Name monorail_1
@@ -6901,6 +6902,7 @@ population
 				Attributes IgnoreEnemies
 				Attributes IgnoreFlag
 				Attributes SuppressFire
+				Tag "bot_gray_train_hook"
 				Action Idle
 				AddCond { Name TF_COND_STEALTHED_USER_BUFF_FADING } 
 				StripItemSlot 0
