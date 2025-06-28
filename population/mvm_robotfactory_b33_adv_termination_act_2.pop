@@ -5004,8 +5004,12 @@ population
 		}
 		InitWaveOutput
 		{
-			Target	Wave2Relay
-			Action	Trigger
+			Target BigNet
+			Action runscriptcode
+			Param "
+				IncludeScript(`mvm_robotfactory_b33_adv_termination_act_2_scripts`, getroottable())
+				EntFire(`Wave2Relay`, `Trigger`)
+			"
 		}
 		StartWaveOutput
 		{
@@ -5949,7 +5953,6 @@ population
 			Target wave_start_relay // gamerules or tf_gamerules, depending on the map
 			Action RunScriptCode
 			Param "
-				IncludeScript(`mvm_robotfactory_b33_adv_termination_act_2_scripts`, getroottable())
 				EntFire(`oleada4`, `Trigger`)
 				Convars.SetValue(`tf_playergib`, 0)
 			"
