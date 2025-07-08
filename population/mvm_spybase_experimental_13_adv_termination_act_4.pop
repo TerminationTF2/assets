@@ -12,7 +12,12 @@ WaveSchedule
     AllowBotExtraSlots 1
 	RobotLimit 40
 	BodyPartScaleSpeed 9999
-    PrecacheModel "models/bots/boss_bot/combat_tank/combat_tank_fireball.mdl"
+    PrecacheModel "models/bots/boss_bot/combat_tank_mk2/mk2_fireball.mdl"
+	PrecacheModel "models/bots/boss_bot/combat_tank_mk2/mk2_railgun.mdl"
+	PrecacheModel "models/bots/boss_bot/combat_tank_mk2/mk2_minigun.mdl"
+	PrecacheModel "models/bots/boss_bot/combat_tank_mk2/mk2_combat_tank_chassis.mdl"
+    PrecacheModel "models/bots/boss_bot/combat_tank_mk2/mk2_rocket_pod.mdl"
+    PrecacheModel "models/bots/boss_bot/combat_tank_mk2/mk2_rocket_dumbfire.mdl"
     PrecacheModel "models/weapons/c_models/c_firelauncher/c_firelauncher.mdl"
 	PrecacheModel	"models/props_tumb/mvm/tank_shield.mdl"
 	PrecacheSound "act4w1placeholder.mp3"
@@ -527,6 +532,19 @@ WaveSchedule
             }
 			logic_relay
 			{
+				"targetname" "redlose_relay"
+				"OnTrigger" "red_loses,RoundWin,,0,-1"
+			}
+			game_round_win 
+			{
+				"TeamNum" "3"
+				"targetname" "red_loses"
+				"switch_teams" "0"
+				"force_map_reset" "1"
+				"classname" "game_round_win"
+			}
+			logic_relay
+			{
 				"targetname" "oleada6"
                 "OnTrigger" "tf_objective_resource,$SetClientProp$m_iszMvMPopfileName,Termination - Total Teardown,0,-1"
 				"OnTrigger" "item_teamflag*,SetReturnTime,60,0,-1"
@@ -555,14 +573,19 @@ WaveSchedule
 				"OnTrigger" "tank_path_australium_56,AddOutput,OnPass spawnbot_right:enable::0:-1,0,-1"
 				"OnTrigger" "tank_path_australium_56,AddOutput,OnPass teleporter_clear:trigger::0:-1,0,-1"
 				"OnTrigger" "tank_path_australium_54,AddOutput,OnPass moosic:FadeOut:5:0:-1,0,-1"
-				"OnTrigger" "tank_path_australium_54,AddOutput,OnPass wave_finished_relay:trigger:0:0:-1,0,-1"
+				"OnTrigger" "tank_path_australium_52,AddOutput,OnPass wave_finished_relay:trigger:0:0:-1,0,-1"
 				"OnTrigger" "tank_path_australium_54,AddOutput,OnPass moosic:Kill::5:-1,0,-1"
 				"OnTrigger" "tank_path_australium_54,AddOutput,OnPass musiccontroler:disable:0:0:-1,0,-1"
+				"OnTrigger" "tank_path_australium_54,AddOutput,OnPass redlose_relay:disable:0:0:-1,0,-1"
 				"OnTrigger" "tank_path_australium_52,AddOutput,OnPass carrier_lift_raise_relay:trigger::0:-1,0,-1"
+				"OnTrigger" "tank_path_australium_52,AddOutput,OnPass lift_spawn_set_team_blu:trigger::0:-1,0,-1"
 				"OnTrigger" "tank_path_australium_52,AddOutput,OnPass red_normal_mission_relay:trigger::0:-1,0,-1"
 				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass payloadtank:SetSpeed:0:4:-1,0,-1"
+				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass counttext:SetColor:255 255 255 255:7:-1,0,-1"
+				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass disablegas:enable::7:-1,0,-1"
 				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass 05_door_lock_relay:trigger:0:3:-1,0,-1"
 				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass 05_door:setspeed:100:7:-1,0,-1"
+				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass red_blocker3:kill::7:-1,0,-1"
 				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass drill_repairzone:disable::0:-1,0,-1"
 				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass drill_repairzone_2:enable::0:-1,0,-1"
 				"OnTrigger" "tank_path_australium_31,AddOutput,OnPass merascoloshuevosadosmanos:enable::0:-1,0,-1"
@@ -995,9 +1018,70 @@ WaveSchedule
 				"OnHitMax" "red_blocker3,kill,,0.2,1"
 				"OnHitMax" "merascoloshuevosadosmanos,disable,,0.22,1"
                 "OnHitMax" "spawnbot_section3_getbusier,disable,,0,1"
+				"OnHitMax" "disablegas,disable,,0,1"
+				"OnHitMax" "counttext,setcolor,255 255 255 0,0,1"
+				"OutValue" "changetext,InValue,,0,-1"
+				"OutValue" "tf_gamerules,playvo,ui/killsound_beepo.wav,0,-1"
 				"startdisabled" "1"
             }
-            
+			logic_case
+            {
+                "targetname" "changetext"
+                "case01" "1"
+				"case02" "2"
+				"case03" "3"
+				"case04" "4"
+				"case05" "5"
+				"case06" "6"
+				"case07" "7"
+				"case08" "8"
+				"case09" "9"
+				"case10" "10"
+				"case11" "11"
+				"case12" "12"
+                "oncase01" "counttext,SetText,            x 11,0,-1"
+                "oncase02" "counttext,SetText,            x 10,0,-1"
+                "oncase03" "counttext,SetText,            x 9,0,-1"
+                "oncase04" "counttext,SetText,            x 8,0,-1"
+                "oncase05" "counttext,SetText,            x 7,0,-1"
+                "oncase06" "counttext,SetText,            x 6,0,-1"
+				"oncase07" "counttext,SetText,            x 5,0,-1"
+				"oncase08" "counttext,SetText,            x 4,0,-1"
+				"oncase09" "counttext,SetText,            x 3,0,-1"
+				"oncase10" "counttext,SetText,            x 2,0,-1"
+				"oncase11" "counttext,SetText,            x 1,0,-1"
+            }
+			prop_dynamic
+			{
+				"targetname" "disablegas"
+				"parentname" "rotatebomb"
+				"model"      "models/weapons/c_models/c_gascan/c_gascan.mdl"
+				"origin"     "0 0 200"
+				"angles"	"90 0 0"
+				"modelscale" "1.5"
+				"renderfx" "15"
+				"disableshadows" "1"
+				"startdisabled" "1"
+			}
+			func_rotating
+			{
+				"targetname" "rotatebomb"
+				"maxspeed"   "100"
+				"origin"     "0 0 200"
+				"spawnflags" "65"
+				"dmg"        "0"
+				"fanfriction" "0"
+			}
+            point_worldtext
+            {
+                "targetname" "counttext"
+                "message" "            x 12"
+                "font" "1"
+                "textsize" "24"
+                "color" "255 255 255 0"
+                "orientation" "1"
+                "origin" "0 0 170"
+            }
 			prop_dynamic
 			{
 				"targetname" "slowdownshield"
@@ -1729,6 +1813,10 @@ WaveSchedule
 			    EntFire(`prop_engitank_waiting*`, `Kill`)
 			    EntFire(`red_blocker`, `Kill`)
 			    EntFire(`red_blocker2`, `Kill`, ``, 22)
+				EntFire(`lift_door_right`,`unlock`)
+				EntFire(`lift_door_left`,`unlock`)
+				EntFire(`lift_door_right`,`open`)
+				EntFire(`lift_door_left`,`open`)
 			    EntFire(`carrier_door_front`, `SetAnimation`, `door_open`, 28) // adding this here and not to the main logic just because it is temporary
 			    EntFire(`carrier_door_front`, `SetAnimation`, `open`, 34.67)
 			    EntFire(`tf_point_nav_interface`, `RecomputeBlockers`, ``, 34.68)
@@ -1746,6 +1834,8 @@ WaveSchedule
             IncludeScript(`tankextensions/combattank_weapons/rocketpod`, getroottable())
 			IncludeScript(`tankextensions/combattank_weapons/fireball`, getroottable())
             EntFire(`autologic`,`forcespawn`)
+			EntFire(`lift_door_right`,`lock`)
+			EntFire(`lift_door_left`,`lock`)
             EntFire(`teleporters`,`forcespawn`)
 			EntFire(`bombpath_clearall_relay`, `Trigger`)
 			EntFire(`tank_lift_lowered`, `Enable`)
@@ -1783,7 +1873,7 @@ WaveSchedule
 				TeamNum 2
 				OnKilledOutput
 				{
-					Target	red_lose_relay
+					Target	redlose_relay
 					Action	Trigger
 				}
 				OnBombDroppedOutput
@@ -2334,14 +2424,14 @@ WaveSchedule
         WaveSpawn
         {
             Name "secondchief_bots"
-            TotalCount 30
-            MaxActive 10
+            TotalCount 20
+            MaxActive 8
             SpawnCount 1
 
             Where spawnbot_side_2
 
             WaitBeforeStarting 7.5
-            WaitBetweenSpawns 2
+            WaitBetweenSpawns 3
 			WaitForAllSpawned "secondchief"
             TotalCurrency 25
             RandomChoice
@@ -2388,7 +2478,7 @@ WaveSchedule
         WaveSpawn
         {
             Name "secondchief_bots"
-            TotalCount 18
+            TotalCount 12
             MaxActive 5
             SpawnCount 3
 
@@ -2461,8 +2551,8 @@ WaveSchedule
 		WaveSpawn
 		{
 			Name "section_3_get_busy"
-			TotalCount 20
-			MaxActive 9
+			TotalCount 15
+			MaxActive 6
 			SpawnCount 2
 
 			Where spawnbot_side_1
