@@ -903,6 +903,38 @@ WaveSchedule
 				"initialowner" "the_funny_man"
 			}
 
+			// Drill Tank Assets
+			prop_dynamic // Drill Tank Main Body
+            {
+                "origin" "848 -287 336"
+                "targetname" "drill_tank_prop"
+                "model" "models/watermine/drill_tank.mdl"
+				"skin" "1"
+                "angles" "0 143 0"
+                "solid" "6"
+				"disableshadows" "1"
+            }
+            prop_dynamic // Drill Tank Track
+            {
+                "targetname" "drill_tank_prop"
+                "model" "models/bots/boss_bot/tank_track_l.mdl"
+                "angles" "0 143 0"
+                "solid" "0"
+                "modelscale" "1"
+                "origin" "838 -347 336"
+				"disableshadows" "1"
+            }
+            prop_dynamic // Drill Tank Track
+            {
+                "targetname" "drill_tank_prop"
+                "model" "models/bots/boss_bot/tank_track_l.mdl"
+                "angles" "0 143 0"
+                "solid" "0"
+                "modelscale" "1"
+                "origin" "901 -259 336"
+				"disableshadows" "1"
+            }
+
 			// Fixed Generator Model
 			prop_dynamic
             {
@@ -1117,6 +1149,13 @@ WaveSchedule
 				"display_text" "Door unlocked!"
 				"origin" "-640 -1300 140"
 			}
+			training_annotation // Capture Point B Annotation
+			{
+				"targetname" "ControlPointBAnnotation"
+				"lifetime" "10"
+				"display_text" "Control Point Unlocked!"
+				"origin" "-1085 858 305"
+			}
 			training_annotation // Loading Zone Door Annotation
 			{
 				"targetname" "LoadingZoneAAnnotation"
@@ -1317,7 +1356,7 @@ WaveSchedule
                 "OnTrigger" "spawnbot_B2,Enable,,0,-1"
                 "OnTrigger" "spawnbotDEBridge,Enable,,0,-1"
                 "OnTrigger" "spawnbotDECrate,Enable,,0,-1"
-				"OnTrigger" "contolpointannotation,show,,4,1"
+				"OnTrigger" "ControlPointBAnnotation,show,,4,1"
 			}
 			prop_dynamic // Control Point A Prop
 			{
@@ -2540,6 +2579,7 @@ WaveSchedule
 				"OnTrigger"	"cleanupbots,enable,,0,-1"
 				"OnTrigger" "elevatorascendingmusic,PlaySound,,0,-1"
 				"OnTrigger" "lift_shaft,SetSpeed,60,0,1"
+				"OnTrigger" "bomb,ForceResetSilent,,0,-1"
 				"OnTrigger" "telezone,disable,,0.1,1"
 				"OnTrigger"	"cleanupbots,disable,,1,-1"
 				"OnTrigger" "tf_gamerules,PlayVO,plats\elevator_large_start1.wav,9.4,1"
@@ -2570,7 +2610,7 @@ WaveSchedule
                 "OnTrigger" "text2,Display,,55,1"
                 "OnTrigger" "text_lower2,Display,,56,1"
                 "OnTrigger" "fadetoblack,Fade,,58.3,1"
-				"OnTrigger" "tf_gamerules,$ChangeLevel,mvm_spybase_experimental_13|adv_termination_act_4,59,-1"                
+				"OnTrigger" "tf_gamerules,$ChangeLevel,mvm_spybase_experimental_13|termination_act_4_rewritten,59,-1"                
             }
 			env_shake // Elevator Main Shake
 			{
@@ -2738,6 +2778,12 @@ WaveSchedule
                 })
                 "
             }
+			// Disabling Hidden Australium Tank Collision
+			OnSpawnOutput
+			{
+				Target australium_tank_model_main
+				Action "DisableCollision"
+			}
 		}
 
 		// Unstable Charge for Giants
@@ -5736,7 +5782,7 @@ WaveSchedule
 				DisableBomb 1
 				Gravity 0
 				StartingPathTrackNode "monorail_A_1"
-				Model   //Set custom model on tank. Will spit harmless errors on client console if the model does not have enough sequences
+				Model
 				{
 					Default "models/robot_factory/monorail_tank.mdl"
 					Damage1 "models/robot_factory/monorail_tank_damage1.mdl"
@@ -5918,20 +5964,21 @@ WaveSchedule
 				NoCrushDamage 1
 				DisableBomb 1
 				Gravity 0
+				StartingPathTrackNode "monorail_B_1"
 				Model   //Set custom model on tank. Will spit harmless errors on client console if the model does not have enough sequences
 				{
-					Default "models/robot_factory/monorail_tank.mdl"
-					Damage1 "models/robot_factory/monorail_tank_damage1.mdl"
-					Damage2 "models/robot_factory/monorail_tank_damage2.mdl"
-					Damage3 "models/robot_factory/monorail_tank_damage3.mdl"
-				}
-				StartingPathTrackNode "monorail_B_1"	
+				Default "models/robot_factory/monorail_tank.mdl"
+				Damage1 "models/robot_factory/monorail_tank_damage1.mdl"
+				Damage2 "models/robot_factory/monorail_tank_damage2.mdl"
+				Damage3 "models/robot_factory/monorail_tank_damage3.mdl"
+				}	
 				OnBombDroppedOutput                             
 				{
 					Target boss_deploy_relay 
 					Action Trigger                         
 				}
 			}
+			
 			FirstSpawnOutput
 			{
 				Target panic_subwave_incoming

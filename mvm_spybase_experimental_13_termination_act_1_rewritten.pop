@@ -12,7 +12,6 @@ WaveSchedule
     AllowBotExtraSlots 1
     RobotLimit 40
     WaveStartCountdown 3
-    Advanced 1 // Not sure if necessary?
 
     //// DISABLED SOUNDS ////
 
@@ -758,8 +757,8 @@ WaveSchedule
                 "onstarttouch"  "pop_interface,$ResumeWavespawn,Wave1_Subwave6_Bowmen,0,1"
                 "onstarttouch" "chieftechnicianhighlighter,cancelpending,,0.1,-1"
                 "onstarttouch" "chieftechnicianhighlighter,disable,,0,-1"
-                "onstarttouch" "LOOKATMEBITCH*,disable,,0,-1"
-                "onstarttouch" "LOOKATMEBITCH3,enable,,0.1,-1"
+                "onstarttouch" "highlightglow*,disable,,0,-1"
+                "onstarttouch" "highlightglow3,enable,,0.1,-1"
 				"filtername" "red_team_filter"
 			}
             logic_relay // Boss Fight Start Sequence
@@ -837,7 +836,7 @@ WaveSchedule
 				"origin" "-5060 1790 536"
 				"model" "models/props_gameplay/cap_point_base.mdl"
 				"solid" "0"
-				"skin" "0" //skingroup to use, the control point base prop is a little special and doesnt follow the "0 is red 1 is blu" formula and instead 0 = neutral, 1 = red, 2 = blu
+				"skin" "0"
 			}
             trigger_capture_area // Control Point Trigger
 			{
@@ -2142,8 +2141,8 @@ WaveSchedule
             }
             logic_relay // Elevator Sequence Relay
 			{
-				"targetname"	"elevator_transition"
-				"OnTrigger"		"func_upgradestation*,disable,,0,-1"
+				"targetname" "elevator_transition"
+				"OnTrigger"	"func_upgradestation*,disable,,0,-1"
 				"OnTrigger" "playerRunScriptCodeself.SetHudHideFlags(~132)0-1"
 				"OnTrigger" "lift_door_*,close,,0,-1"
 				"OnTrigger" "lift_door_*,SetSpeed,60,0,-1"
@@ -2156,10 +2155,9 @@ WaveSchedule
 				"OnTrigger"  "elevator_sound_loop_relay,disable,,34,1"
 				"OnTrigger"  "tf_gamerules,$StopVO,plats\skylift_move.wav,34,-1"
 				"OnTrigger"  "lift_shaft,setposition,-1,11,1"
-				"OnTrigger"	 "camera2,$DisableAll,,45.95,-1"
-				"OnTrigger"	"tf_gamerules,$ChangeLevel,mvm_robotfactory_b34|adv_termination_act_2,46,-1"
+				"OnTrigger"	 "titledropcamera,$DisableAll,,45.95,-1"
+				"OnTrigger"	"tf_gamerules,$ChangeLevel,mvm_robotfactory_b34|termination_act_2and3_rewritten,46,-1"
 				"OnTrigger"	"redwin_relay,trigger,,45.9,-1"
-				"OnTrigger" "abrawlissurelybrewing,startshake,,6.2,1"
 				"OnTrigger"	"insertterminationsplashtext,trigger,,30,-1"
 				"OnTrigger"	"mapcleartrigger,enable,,5.7,-1"
 				"OnTrigger"	"mapcleartrigger,disable,,5.8,-1"
@@ -2242,7 +2240,7 @@ WaveSchedule
 			}
 			AddAttribute // Makes Him Start Moving
 			{
-				Item Player
+				Item Player [$SIGSEGV]
 				Name "move speed bonus"
 				Value 0.5
 				Delay 10
@@ -2468,7 +2466,7 @@ WaveSchedule
 			Param "
 			EntFire(`wave_start_relay`, `Trigger`)
 			EntFire(`disablethesewavespawns`, `Trigger`)
-			EntFire(`hudtimer`, `enable`, null, 0.5)
+			EntFire(`hudtimer`, `enable`,, 0.5)
 			EntFire(`startingdoorbutton`, `enable`)
 			EntFire(`heytouchthis`, `enable`)
 			EntFire(`startingdoorbutton`, `unlock`)
@@ -2790,7 +2788,7 @@ WaveSchedule
 			{
 				Template T_TFBot_SentryBuster
 				ClassIcon sentry_buster_giant_support
-				Health 5
+				Health 4
 				Tag giant
 				UseBusterModel 1
 				Action SuicideBomber
@@ -3087,6 +3085,8 @@ WaveSchedule
 			WaitBeforeStarting 4
 			WaitBetweenSpawns 0
 			TotalCurrency 150
+
+			FirstSpawnWarningSound "mvm/mvm_tank_start.wav"
 
 			Tank
 			{
@@ -3519,7 +3519,7 @@ WaveSchedule
 		{
 			Name "Wave1_Subwave7_GRapidSquad"
 			WaitForAllDead "Wave1_Subwave1_ChiefTechnician"
-			Where spawnbot_rocketspawn
+			Where spawnbot_rocketspawn [$SIGSEGV]
 			TotalCount 24
 			MaxActive 16
 			SpawnCount 6
@@ -3634,7 +3634,7 @@ WaveSchedule
 		{
 			Name "Wave1_Subwave7_BurstDemos"
 			WaitForAllSpawned "Wave1_Subwave7_GRapidSquad"
-			Where spawnbot_rocketspawn
+			Where spawnbot_rocketspawn [$SIGSEGV]
 			TotalCount 21
 			MaxActive 15
 			SpawnCount 3
@@ -3669,7 +3669,7 @@ WaveSchedule
 		{
 			Name "Wave1_RunPreserver"
 			
-			Where spawnbot_rocketspawn
+			Where spawnbot_rocketspawn [$SIGSEGV]
 			TotalCount 1
 			MaxActive 1
 			SpawnCount 1

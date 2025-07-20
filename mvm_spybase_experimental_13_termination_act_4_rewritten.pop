@@ -13,7 +13,6 @@ WaveSchedule
     RobotLimit 40
     WaveStartCountdown 3
     BodyPartScaleSpeed 9999
-    Advanced 1 /// Not sure if necessary?
 
     //// PRECACHED MODELS ////
 
@@ -422,14 +421,9 @@ WaveSchedule
                 Delay 0.1
             }
 
-            OnSpawnOutput // Triggering the relay that's maybe meant to be logic auto
-			{
-				Target "wave6"
-				Action "trigger"
-			}
 			logic_relay // Maybe meant to be logic auto
 			{
-				"targetname" "wave6"
+				"targetname" "Wave6SetupRelay"
                 "OnTrigger" "tf_objective_resource,$SetClientProp$m_iszMvMPopfileName,Termination - Total Teardown,0,-1"
 				"OnTrigger" "item_teamflag*,SetReturnTime,60,0,-1"
 				"OnTrigger" "sky_sunset_relay,Trigger,,0,-1"
@@ -437,6 +431,8 @@ WaveSchedule
 				"OnTrigger" "01_door_lock_relay,trigger,,0,-1"
 				"OnTrigger" "01_door,setspeed,500,0,-1" // close it fast
 				"OnTrigger" "01_door,setspeed,50,2,-1" // this is like close to the default speed i think
+				"OnTrigger" "lift_door_left,close,,0.5,-1"
+				"OnTrigger" "lift_door_right,close,,0.5,-1"
 				"OnTrigger" "pop_interface,$PauseWavespawn,Wave6_Subwave2_PyroPatrolChief,0,-1"
 				"OnTrigger" "pop_interface,$PauseWavespawn,Wave6_Subwave3_EngineerAmbush,0,-1"
 				"OnTrigger" "pop_interface,$PauseWavespawn,Wave6_Subwave5_DemoPatrolChief,0,-1"
@@ -1203,7 +1199,7 @@ WaveSchedule
 					x = -1
 					y = 0.77
 					color = `0 255 555`
-					relayname = `redlose_relay`
+					relayname = `red_lose_relay`
 					text_prepend = `ROCKET FUELING: `
 					automatic = true 
         		})
@@ -1254,7 +1250,7 @@ WaveSchedule
 			}
         }
         Wave7Setup
-        {   
+        {
             // Disabling Shadows
             OnSpawnOutput
             {
@@ -1528,7 +1524,7 @@ WaveSchedule
 		}
         logic_relay // Red Lose Relay
 		{
-			"targetname" "redlose_relay"
+			"targetname" "red_lose_relay"
 			"OnTrigger" "red_loses,RoundWin,,0,-1"
 		}
 
@@ -2255,23 +2251,25 @@ WaveSchedule
     {
         CustomWaveNumber 6
         CustomMaxWaveNumber 7
+		Checkpoint Yes
 
         InitWaveOutput
         {
             Target wave_start_relay
             Action runscriptcode
 			Param "
+			EntFire(`Wave6Assets`, `ForceSpawn`)
+            EntFire(`Wave6Setup`, `ForceSpawn`)
+			EntFire(`Wave6SetupRelay`, `Trigger`)
 			IncludeScript(`tankextensions_main`, getroottable())
-            IncludeScript(`claudz_logic_v3`)
             IncludeScript(`tankextensions/combattank`, getroottable())
             IncludeScript(`tankextensions/combattank_weapons/minigun`, getroottable())
             IncludeScript(`tankextensions/combattank_weapons/rocketpod`, getroottable())
 			IncludeScript(`tankextensions/combattank_weapons/fireball`, getroottable())
-            EntFire(`Wave6Assets`,`forcespawn`)
-            EntFire(`Wave6Setup`,`forcespawn`)
+			IncludeScript(`claudz_logic_v3`)
 			EntFire(`lift_door_right`,`lock`)
 			EntFire(`lift_door_left`,`lock`)
-            EntFire(`AustraliumTankShortcut`,`forcespawn`)
+            EntFire(`AustraliumTankShortcut`,`ForceSpawn`)
 			EntFire(`bombpath_clearall_relay`, `Trigger`)
 			EntFire(`tank_lift_lowered`, `Enable`)
 			Convars.SetValue(`tf_playergib`, 0)
@@ -3151,7 +3149,7 @@ WaveSchedule
 		{
 			Name "Wave6_Subwave4_SupportEngineers"
 			WaitForAllSpawned "Wave6_Subwave4_GPyros"
-			Where spawnbot_section3_getbusier
+			Where spawnbot_section3_getbusier [$SIGSEGV]
 			Support 1
 			TotalCount 24
 			MaxActive 4
@@ -3199,7 +3197,7 @@ WaveSchedule
 		{
 			Name "Wave6_Subwave4_SupportEngineers"
 			WaitForAllSpawned "Wave6_Subwave4_GPyros"
-			Where spawnbot_section3_getbusier
+			Where spawnbot_section3_getbusier [$SIGSEGV]
 			Support 1
 			TotalCount 16
 			MaxActive 10
