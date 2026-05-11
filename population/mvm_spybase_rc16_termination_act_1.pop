@@ -46,7 +46,7 @@ WaveSchedule
 
     // Misc. Models
     PrecacheModel "models/props_mvm/indicator/indicator_circle.mdl"
-	PrecacheModel "models/effects/mvm_holograms/mvm_cappoint_hologram.mdl"
+	PrecacheModel "models/mvm/barrier/barrier_spawn_blue1.mdl"
 	PrecacheModel "models/robot_factory/monorail/trains/monorail_cargo_container_separate_open.mdl"
     PrecacheModel "models/effects/mvm_holograms/mvm_cappoint_hologram.mdl"
 	PrecacheModel "models/effects/mvm_holograms/mvm_cappoint_hologram_onlyblue.mdl"
