@@ -1,0 +1,140 @@
+#base robot_standard.pop
+#base robot_giant.pop
+
+WaveSchedule
+{
+	StartingCurrency 10000
+	CanBotsAttackWhileInSpawnRoom No
+	RespawnWaveTime 0
+
+	CustomNavFile "mvm_spybase_rc11_goliath" [$SIGSEGV]
+	WaveStartCountdown 0 [$SIGSEGV]
+
+	PrecacheModel "models/bots/heavy_boss/base_belly.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_belly.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_collar.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_collar.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_lower_arm_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_lower_arm_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_lower_arm_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_lower_arm_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_pectoral.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_pectoral_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_pectoral.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_pectoral_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_shoulder_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_shoulder_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_shoulder_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_shoulder_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_upper_arm_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_upper_arm_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_upper_arm_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/armour_piece_upper_arm_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_foot_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_foot_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_hand_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_hand_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_head.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_hip_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_hip_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_knee_l.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_knee_r.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_neck.mdl" [$SIGSEGV]
+	PrecacheModel "models/bots/heavy_boss/base_pelvis.mdl" [$SIGSEGV]
+
+	Templates
+	{
+		T_TFBot_Goliath
+		{
+			Name "Goliath"
+			Class Heavyweapons
+			ClassIcon heavy_head_nys
+
+			Skill Expert
+			Health 40000
+			Attributes UseBossHealthBar
+			Attributes MiniBoss
+
+			Action Mobber [$SIGSEGV]
+
+			Tag "bot_goliath"
+
+			CharacterAttributes
+			{
+				"move speed bonus" 0.001
+				"no_jump" 1
+				"override projectile type" -1
+			}
+		}
+	}
+
+	Wave
+	{
+		InitWaveOutput
+		{
+			Target BigNet
+			Action RunScriptCode
+			Param "
+				ClientPrint(null, Constants.EHudNotify.HUD_PRINTTALK, `InitWaveOutput`)
+				IncludeScript(`goliath`, getroottable())
+				Termination.MapFixup()
+			"
+		}
+
+		StartWaveOutput
+		{
+			Target wave_start_relay
+			Action Trigger
+			Param "
+				EntFire(`red_blocker`, `Kill`)
+				EntFire(`red_blocker2`, `Kill`, ``, 22.0)
+			"
+		}
+
+		DoneOutput
+		{
+			Target wave_finished_relay
+			Action Trigger
+		}
+
+		WaveSpawn // 3 GSoldiers
+		{
+			Name "Wave1_Subwave2_GSoldier"
+			Where spawnbot_side_3
+			TotalCount 1
+			MaxActive 2
+			SpawnCount 1
+			WaitBeforeStarting 9999
+			WaitBetweenSpawns 12
+
+			TotalCurrency 50
+
+			TFBot
+			{
+				Template T_TFBot_Giant_Soldier
+				Action Mobber [$SIGSEGV]
+
+				CharacterAttributes
+				{
+					"move speed bonus" 0.0001
+					"never gib" 1
+				}
+ 			}
+		}
+
+		WaveSpawn
+		{
+			Name "boss"
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 0
+			Where spawnbot
+
+			TFBot
+			{
+				Template T_TFBot_Goliath
+			}
+		}
+	}
+}

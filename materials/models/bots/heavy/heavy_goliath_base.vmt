@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\bots\heavy\heavy_goliath_base"
+	"$translucent" 1
+	"%keywords" "tf"
+	"model"	1
+}
