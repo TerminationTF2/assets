@@ -18,6 +18,63 @@ if (!("ConstantNamingConvention" in ROOT))
 const NO_MISSION = 0
 const TICK_INTERVAL = 0.015
 
+// script TestMainAttack("ShotgunAttack")
+::TestMainAttack <- function(main_attack_name)
+{
+	local goliath = null
+
+	for (local i = MaxClients().tointeger(); i > 0; i--)
+	{
+		local player = PlayerInstanceFromIndex(i)
+		if (!player)
+			continue
+
+		if (!player.IsBotOfType(TF_BOT_TYPE))
+			continue
+
+		if (!player.IsAlive())
+			continue
+
+		if (player.HasBotTag("bot_goliath"))
+		{
+			goliath = player
+			break
+		}
+	}
+
+	if (!goliath)
+	{
+		printl("Could not find bot_goliath.")
+		return
+	}
+
+	local base_ai = bot.GetScriptScope().GoliathAI
+	if (base_ai.CurrentMainAttack)
+	{
+		printl("Goliath is already executing a main attack.")
+		return
+	}
+
+	if (!(main_attack_name in GoliathAI))
+	{
+		printf("Could not find main attack by name of \"%s\".\n", main_attack_name)
+		return
+	}
+
+	local main_attack_class = GoliathAI[main_attack_name]
+	if (!(main_attack_class instanceof GoliathAI.MainAttack))
+	{
+		printf("\"%s\" is not a derived class of MainAttack.\n", main_attack_name)
+		return
+	}
+
+	printf("Performing main attack \"%s\"...\n", main_attack_name)
+	if ("USE_TEMP_SPAWN" in Termination && Termination.USE_TEMP_SPAWN)
+		printl("Warning: Goliath is in a temporary spawn location, some AI routines may not function as expected.")
+
+	base_ai.DoMainAttack(main_attack_class)
+}
+
 ::GoliathAI <-
 {
 	function CheckBotTags(bot)
