@@ -30,4 +30,3 @@ Some parts of the WaveSpawns (Like Where keyvalues that use ExtraSpawnPoints) ha
 I believe that is all. Thank you for reading, and I hope we can maintain this level of organisation considering how large the scope has gotten.
 
 - Kai
-

@@ -1,0 +1,5 @@
+With the Termination popfiles having been written over several years and having been handled by several people, there's a lot of things that are part of this project that I feel are either unpolished or inefficient. Because of this, I wanted to start a Popfile Renovation in order to try and clean things up, for performance's sake as well as efficiency's sake.
+
+I had originally talked this with Table and he said it would be best to leave it until we have every piece of the project in place. While I understand where he's coming from, I think it's going to be difficult to polish an entire project that would include two VScripted bosses, with the rest of the mission being effectively point-templated or LUA-scripted. To not override the Modern files, this is a separate directory I'm creating in the Github Repo to do my renovations.
+
+- Kai
