@@ -144,7 +144,7 @@ const TICK_INTERVAL = 0.015
 			local delay = info.Func.call(self)
 			if (delay == null)
 			{
-				::GoliathAI.RemoveContextThink(self, identifier)
+				GoliathAI.RemoveContextThink(self, identifier)
 				continue
 			}
 
@@ -402,10 +402,10 @@ class GoliathAI.BaseAI
 
 		local scope = Goliath.GetScriptScope()
 		scope.MyBaseAI <- this
-		scope.GoliathAIEvents <- {}
-		scope.GoliathAIEvents.OnGameEvent_player_death <- player_death.bindenv(this)
-		scope.GoliathAIEvents.OnGameEvent_mvm_reset_stats <- mvm_reset_stats.bindenv(this)
-		__CollectGameEventCallbacks(scope.GoliathAIEvents)
+		scope.MyBaseAIEvents <- {}
+		scope.MyBaseAIEvents.OnGameEvent_player_death <- player_death.bindenv(this)
+		scope.MyBaseAIEvents.OnGameEvent_mvm_reset_stats <- mvm_reset_stats.bindenv(this)
+		__CollectGameEventCallbacks(scope.MyBaseAIEvents)
 	}
 
 	function DoMainAttack(attack_class)
