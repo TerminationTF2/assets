@@ -48,7 +48,7 @@ const TICK_INTERVAL = 0.015
 		return
 	}
 
-	local base_ai = bot.GetScriptScope().GoliathAI
+	local base_ai = goliath.GetScriptScope().MyBaseAI
 	if (base_ai.CurrentMainAttack)
 	{
 		printl("Goliath is already executing a main attack.")
@@ -61,10 +61,18 @@ const TICK_INTERVAL = 0.015
 		return
 	}
 
-	local main_attack_class = GoliathAI[main_attack_name]
-	if (!(main_attack_class instanceof GoliathAI.MainAttack))
+	local function baseof(derived_class, base_class)
 	{
-		printf("\"%s\" is not a derived class of MainAttack.\n", main_attack_name)
+		for (local current_base; current_base = derived_class.getbase();)
+			if (current_base == base_class)
+				return true
+		return false
+	}
+
+	local main_attack_class = GoliathAI[main_attack_name]
+	if (!baseof(main_attack_class, GoliathAI.MainAttack))
+	{
+		printf("GoliathAI.%s is not a derived class of GoliathAI.MainAttack.\n", main_attack_name)
 		return
 	}
 
@@ -104,6 +112,7 @@ const TICK_INTERVAL = 0.015
 	}
 
 	// Add a Think context to an entity. Only one think may exist per context identifier.
+	//  Think functions can return a null value to remove themselves.
 	function AddContextThink(ent, func, identifier, delay = -1.0)
 	{
 		local scope = ent.GetScriptScope()
@@ -116,7 +125,11 @@ const TICK_INTERVAL = 0.015
 		}
 
 		if (delay == -1.0)
+		{
 			delay = func.call(ent)
+			if (delay == null)
+				return
+		}
 		scope.ThinkTable[identifier] <- ThinkInfo(){Func = func, NextThink = Time() + delay}
 	}
 
@@ -131,7 +144,7 @@ const TICK_INTERVAL = 0.015
 			local delay = info.Func.call(self)
 			if (delay == null)
 			{
-				GoliathAI.RemoveContextThink(self, identifier)
+				::GoliathAI.RemoveContextThink(self, identifier)
 				continue
 			}
 
@@ -272,10 +285,13 @@ class GoliathAI.MainAttack
 
 	EndCallbacks = null
 
+	static WEAPON_COUNT = 3
+
 	constructor(bot, base_ai)
 	{
 		Goliath = bot
 		BaseAI = base_ai
+		EndCallbacks = []
 	}
 
 	function Start()
@@ -296,6 +312,14 @@ class GoliathAI.MainAttack
 
 	function GetWeaponByClassname(classname)
 	{
+		local is_matching_weapon = @(weapon) weapon.GetClassname() != classname
+		if (classname[-1] == '*')
+		{
+			// Allow trailing wildcards.
+			classname = classname.slice(0, -1)
+			is_matching_weapon = @(weapon) startswith(weapon.GetClassname(), classname)
+		}
+
 		for (local i = 0; i < WEAPON_COUNT; i++)
 		{
 			local weapon = NetProps.GetPropEntityArray(Goliath, "m_hMyWeapons", i)
@@ -304,7 +328,7 @@ class GoliathAI.MainAttack
 
 			NetProps.SetPropBool(weapon, "m_bForcePurgeFixedupStrings", true)
 
-			if (weapon.GetClassname() != classname)
+			if (!is_matching_weapon(weapon))
 				continue
 
 			return weapon
@@ -314,22 +338,23 @@ class GoliathAI.MainAttack
 	}
 }
 
-class GoliathAI.ShotgunAttack extends MainAttack
+class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
 {
 	Shotgun = null
 
+	/*
 	constructor(bot, base_ai)
 	{
 		base.constructor(bot, base_ai)
-		Shotgun = FindShotgun()
 	}
+	*/
 
 	// TODO: Since most main attack routines will require a weapon, we can probably move a lot of this to the base class.
 
 	function SwitchToShotgun()
 	{
-		Shotgun = GetWeaponByClassname("tf_weapon_shotgun")
-		Goliath.Weapon_Switch(Shotgun)
+		Shotgun = GetWeaponByClassname("tf_weapon_shotgun*")
+		BaseAI.SwitchWeapon(Shotgun)
 	}
 
 	function Start()
@@ -343,9 +368,10 @@ class GoliathAI.ShotgunAttack extends MainAttack
 		if (Goliath.GetActiveWeapon() != Shotgun)
 			return -1.0
 
-		if (NetProps.GetPropInt(Shotgun, "m_flNextPrimaryAttack") > Time())
+		if (NetProps.GetPropFloat(Shotgun, "m_flNextPrimaryAttack") > Time())
 			return -1.0
 
+		printl("Ready to Fire!")
 		Fire()
 
 		return null
@@ -368,8 +394,6 @@ class GoliathAI.BaseAI
 	// Passive attacks (I think shoulder rockets are the only ones).
 	ShoulderRockets = null
 
-	static WEAPON_COUNT = 3
-
 	constructor(bot)
 	{
 		Goliath = bot
@@ -377,11 +401,11 @@ class GoliathAI.BaseAI
 		DisableNextbot()
 
 		local scope = Goliath.GetScriptScope()
-		scope.GoliathAI <- this
+		scope.MyBaseAI <- this
 		scope.GoliathAIEvents <- {}
 		scope.GoliathAIEvents.OnGameEvent_player_death <- player_death.bindenv(this)
 		scope.GoliathAIEvents.OnGameEvent_mvm_reset_stats <- mvm_reset_stats.bindenv(this)
-		__CollectGameEventCallbacks(GoliathAIEvents)
+		__CollectGameEventCallbacks(scope.GoliathAIEvents)
 	}
 
 	function DoMainAttack(attack_class)
@@ -390,6 +414,14 @@ class GoliathAI.BaseAI
 
 		CurrentMainAttack.AddEndCallback(function() {CurrentMainAttack = null}.bindenv(this))
 		CurrentMainAttack.Start()
+	}
+
+	function SwitchWeapon(weapon)
+	{
+		local restore_val = Goliath.GetCustomAttribute("disable weapon switch", 0)
+		Goliath.RemoveCustomAttribute("disable weapon switch")
+		Goliath.Weapon_Switch(weapon)
+		Goliath.AddCustomAttribute("disable weapon switch", restore_val, -1.0)
 	}
 
 	function DisableNextbot()
