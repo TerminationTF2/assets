@@ -132,7 +132,12 @@ function ROOT::PrintTable(table, indent = 0)
 		local indestructible_collision = []
 
 		foreach (info in GoliathModels.ARMOR_PLATING)
-			breakable_pieces.push(Util.BreakableArmourPiece(bot, info.attachment, info.path, info.collision_model))
+		{
+			local breakable_piece = Util.BreakableArmourPiece(bot, info.attachment, info.path, info.collision_model)
+			breakable_pieces.push(breakable_piece)
+			// TODO: I don't think scoping rules will allow this to work, if so then it needs bindenv.
+			breakable_piece.AddBreakCallback(@() scope.BreakableArmourPieces.remove(scope.BreakableArmourPieces.find(breakable_piece)))
+		}
 
 		foreach (m in GoliathModels.COLLISION_OTHER)
 			indestructible_collision.push(Termination.Util.IndestructibleCollisionPiece(bot, m.attachment, m.path))

@@ -255,10 +255,15 @@ class Termination.Util.BreakableArmourPiece
 		AttachmentPoint.AttachEnt(Collision)
 		AttachmentPoint.AttachEnt(DamageProxy)
 
-		OnBreakCallbacks.push(@() Collision.Destroy())
-		OnBreakCallbacks.push(@() CosmeticModel.Destroy())
-		// Removing DamageProxy is delayed so that OnTakeDamage hooks don't have an invalid const_entity.
-		OnBreakCallbacks.push(@() EntFireByHandle(DamageProxy, "Kill", "", -1.0, null, null))
+		AddBreakCallback(@() Collision.Destroy())
+		AddBreakCallback(@() CosmeticModel.Destroy())
+		// Removing the DamageProxy is delayed so that later OnTakeDamage hooks don't have an invalid const_entity.
+		AddBreakCallback(@() EntFireByHandle(DamageProxy, "Kill", "", -1.0, null, null))
+	}
+
+	function AddBreakCallback(func)
+	{
+		OnBreakCallbacks.push(func)
 	}
 
 	function OnScriptHook_OnTakeDamage(params)
@@ -340,8 +345,6 @@ class Termination.Util.BreakableArmourPiece
 
 	function Break()
 	{
-		CosmeticModel.Destroy()
-
 		foreach (func in OnBreakCallbacks)
 			func()
 	}
