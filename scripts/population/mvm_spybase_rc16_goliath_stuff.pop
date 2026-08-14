@@ -98,15 +98,13 @@ WaveSchedule
 			Action Trigger
 		}
 
-		WaveSpawn // 3 GSoldiers
+		WaveSpawn
 		{
-			Name "Wave1_Subwave2_GSoldier"
 			Where spawnbot_side_3
 			TotalCount 1
-			MaxActive 2
+			MaxActive 1
 			SpawnCount 1
 			WaitBeforeStarting 9999
-			WaitBetweenSpawns 12
 
 			TotalCurrency 50
 
