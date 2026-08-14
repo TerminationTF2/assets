@@ -15,9 +15,18 @@ if (!("ConstantNamingConvention" in ROOT))
 	}
 }
 
+const CHAN_WEAPON = 1
+const MASK_SHOT = 0x46004003
+const MAX_COORD_FLOAT = 16384.0
 const NO_MISSION = 0
 const TICK_INTERVAL = 0.015
+::CONTENTS_REDTEAM <- CONTENTS_TEAM1
 
+::ATTRIBUTE_NOT_FOUND <- -444.4
+
+PrecacheScriptSound("Cart.Explode")
+
+::TestMainAttack_TempSpawnWarn <- false
 // script TestMainAttack("ShotgunAttack")
 ::TestMainAttack <- function(main_attack_name)
 {
@@ -77,8 +86,11 @@ const TICK_INTERVAL = 0.015
 	}
 
 	printf("Performing main attack \"%s\"...\n", main_attack_name)
-	if ("USE_TEMP_SPAWN" in Termination && Termination.USE_TEMP_SPAWN)
+	if (!TestMainAttack_TempSpawnWarn && "USE_TEMP_SPAWN" in Termination && Termination.USE_TEMP_SPAWN)
+	{
+		TestMainAttack_TempSpawnWarn = true
 		printl("Warning: Goliath is in a temporary spawn location, some AI routines may not function as expected.")
+	}
 
 	base_ai.DoMainAttack(main_attack_class)
 }
@@ -130,7 +142,7 @@ const TICK_INTERVAL = 0.015
 			if (delay == null)
 				return
 		}
-		scope.ThinkTable[identifier] <- ThinkInfo(){Func = func, NextThink = Time() + delay}
+		scope.ThinkTable[identifier] <- ThinkInfo() {Func = func, NextThink = Time() + delay}
 	}
 
 	function ProcessContextThinks()
@@ -310,6 +322,23 @@ class GoliathAI.MainAttack
 			func()
 	}
 
+	function WithAttribute(item, attribute, value, func)
+	{
+		local original_value = item.GetAttribute(attribute, ATTRIBUTE_NOT_FOUND)
+
+		if (value == null)
+			item.RemoveAttribute(attribute)
+		else
+			item.AddAttribute(attribute, value, 0.0)
+
+		func()
+
+		if (original_value == ATTRIBUTE_NOT_FOUND)
+			item.RemoveAttribute(attribute)
+		else
+			item.AddAttribute(attribute, original_value, 0.0)
+	}
+
 	function GetWeaponByClassname(classname)
 	{
 		local is_matching_weapon = @(weapon) weapon.GetClassname() != classname
@@ -342,12 +371,26 @@ class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
 {
 	Shotgun = null
 
-	/*
-	constructor(bot, base_ai)
-	{
-		base.constructor(bot, base_ai)
-	}
-	*/
+	//GameEvents = null // TODO: Should write some kind of util that can collect game events from class instances.
+
+	// constructor(bot, base_ai)
+	// {
+	// 	GameEvents = {}
+	// 	GameEvents.OnScriptHook_OnTakeDamage <- OnScriptHook_OnTakeDamage.bindenv(this)
+	// 	__CollectGameEventCallbacks(GameEvents)
+	// 	base.constructor(bot, base_ai)
+	// }
+
+	// function OnScriptHook_OnTakeDamage(params)
+	// {
+	// 	if (params.const_entity != Goliath)
+	// 		return
+
+	// 	if (params.attacker != Goliath)
+	// 		return
+
+	// 	params.early_out = true
+	// }
 
 	// TODO: Since most main attack routines will require a weapon, we can probably move a lot of this to the base class.
 
@@ -371,18 +414,128 @@ class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
 		if (NetProps.GetPropFloat(Shotgun, "m_flNextPrimaryAttack") > Time())
 			return -1.0
 
-		printl("Ready to Fire!")
+		// TODO: Check that there is sufficient ammo?
+
 		Fire()
 
 		return null
 	}
 
+	BreakablePieceSizeInfo = class
+	{
+		handle = null
+		mins = null
+		maxs = null
+	}
+
+	function GetAimTargetPosition()
+	{
+		// CONTENTS_REDTEAM is not respected against shields because CTFPlayer::FireBullet
+		//  doesn't use it, CTraceFilterIgnoreFriendlyCombatItems is used for hitscan
+		//  (which we can't use because TraceLineEx doesn't support filters).
+		// So just make all the armour pieces nonsolid and revert.
+		local goliath_scope = Goliath.GetScriptScope()
+
+		local armour_collision_sizes = array(goliath_scope.BreakableArmourPieces.len())
+		local cosmetic_collision_sizes = array(goliath_scope.IndestructibleCollision.len())
+
+		local function reg_armour_collision_info(arr, index, collision)
+		{
+			arr[index] = BreakablePieceSizeInfo()
+			{
+				handle = collision,
+				mins = collision.GetBoundingMins(),
+				maxs = collision.GetBoundingMaxs()
+			}
+			collision.SetSize(Vector(), Vector())
+		}
+
+		foreach (i, piece in goliath_scope.BreakableArmourPieces)
+			reg_armour_collision_info(armour_collision_sizes, i, piece.Collision)
+		foreach (i, piece in goliath_scope.IndestructibleCollision)
+			reg_armour_collision_info(cosmetic_collision_sizes, i, piece.Collision)
+
+		local trace =
+		{
+			start = Goliath.EyePosition(),
+			end = Goliath.GetOrigin() + (Goliath.EyeAngles().Forward() * MAX_COORD_FLOAT),
+			mask = MASK_SHOT|CONTENTS_REDTEAM
+		}
+		TraceLineEx(trace)
+
+		foreach (info in armour_collision_sizes)
+			info.handle.SetSize(info.mins, info.maxs)
+		foreach (info in cosmetic_collision_sizes)
+			info.handle.SetSize(info.mins, info.maxs)
+
+		if (trace.hit)
+			return trace.endpos
+
+		// Not throwing an error here because this is technically possible so we need to always handle it.
+		printl("GetAimTargetPosition(): Could not find trace end position.")
+		return null
+	}
+
+	// For Napalm, try:
+	//  cinefx_goldrush
+	//  cinefx_goldrush_flames
+	//  etc.
 	function Fire()
 	{
-		/* Do stuff */
+		WithAttribute(Shotgun, "override projectile type", -1, function()
+		{
+			Shotgun.PrimaryAttack()
 
-		/* Think and then end */
+			// TODO: Effects here are placeholder.
+			EmitSoundEx(
+			{
+				sound_name = "Cart.Explode",
+				entity = Shotgun,
+				sound_level = 255,
+				channel = CHAN_WEAPON,
+				filter_type = RECIPIENT_FILTER_GLOBAL
+			})
+
+			PointExplosion(PointExplosionInfo()
+			{
+				origin = GetAimTargetPosition(),
+				angles = QAngle(-90.0, 0.0, 0.0)
+				particle = "hightower_explosion",
+				radius = 400.0
+			})
+		})
+
 		End()
+	}
+
+	PointExplosionInfo = class
+	{
+		origin = null
+		angles = null
+		sound = "BaseExplosionEffect.Sound"
+		particle = "ExplosionCore_wall"
+		damage = 90.0
+		radius = 146.0
+	}
+
+	function PointExplosion(info)
+	{
+		local bomb = Entities.CreateByClassname("tf_generic_bomb")
+		NetProps.SetPropBool(bomb, "m_bForcePurgeFixedupStrings", true)
+
+		bomb.SetAbsOrigin(info.origin)
+		bomb.KeyValueFromString("sound", info.sound)
+		bomb.KeyValueFromString("explode_particle", info.particle)
+		bomb.KeyValueFromFloat("damage", info.damage)
+		bomb.KeyValueFromFloat("radius", info.radius)
+
+		if (info.angles)
+			bomb.SetAbsAngles(info.angles)
+
+		bomb.DispatchSpawn()
+
+		bomb.SetHealth(1)
+		bomb.TakeDamage(1.0, DMG_GENERIC, Goliath)
 	}
 }
 
@@ -408,6 +561,24 @@ class GoliathAI.BaseAI
 		__CollectGameEventCallbacks(scope.MyBaseAIEvents)
 	}
 
+	// Do some logic with an attribute set, then revert it.
+	function WithAttribute(attribute, value, func)
+	{
+		local original_value = Goliath.GetCustomAttribute(attribute, ATTRIBUTE_NOT_FOUND)
+
+		if (value == null)
+			Goliath.RemoveCustomAttribute(attribute)
+		else
+			Goliath.AddCustomAttribute(attribute, value, 0.0)
+
+		func()
+
+		if (original_value == ATTRIBUTE_NOT_FOUND)
+			Goliath.RemoveCustomAttribute(attribute)
+		else
+			Goliath.AddCustomAttribute(attribute, original_value, 0.0)
+	}
+
 	function DoMainAttack(attack_class)
 	{
 		CurrentMainAttack = attack_class(Goliath, this)
@@ -418,10 +589,10 @@ class GoliathAI.BaseAI
 
 	function SwitchWeapon(weapon)
 	{
-		local restore_val = Goliath.GetCustomAttribute("disable weapon switch", 0)
-		Goliath.RemoveCustomAttribute("disable weapon switch")
-		Goliath.Weapon_Switch(weapon)
-		Goliath.AddCustomAttribute("disable weapon switch", restore_val, -1.0)
+		WithAttribute("disable weapon switch", null, function()
+		{
+			Goliath.Weapon_Switch(weapon)
+		})
 	}
 
 	function DisableNextbot()
