@@ -339,6 +339,22 @@ class GoliathAI.MainAttack
 			item.AddAttribute(attribute, original_value, 0.0)
 	}
 
+	function WeaponHasAmmo(weapon)
+	{
+		local ammo_type = weapon.GetPrimaryAmmoType()
+		if (ammo_type == -1)
+			// Weapon doesn't use ammo (melee or similar).
+			return true
+
+		if (weapon.Clip1() > 0)
+			return true
+
+		if (NetProps.GetPropIntArray(Goliath, "m_iAmmo", ammo_type))
+			return true
+
+		return false
+	}
+
 	function GetWeaponByClassname(classname)
 	{
 		local is_matching_weapon = @(weapon) weapon.GetClassname() != classname
@@ -414,7 +430,8 @@ class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
 		if (NetProps.GetPropFloat(Shotgun, "m_flNextPrimaryAttack") > Time())
 			return -1.0
 
-		// TODO: Check that there is sufficient ammo?
+		if (!WeaponHasAmmo(Shotgun))
+			return -1.0
 
 		Fire()
 
@@ -435,7 +452,6 @@ class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
 		//  (which we can't use because TraceLineEx doesn't support filters).
 		// So just make all the armour pieces nonsolid and revert.
 		local goliath_scope = Goliath.GetScriptScope()
-
 
 		foreach (piece in goliath_scope.BreakableArmourPieces)
 			piece.Collision.AddSolidFlags(FSOLID_NOT_SOLID)
