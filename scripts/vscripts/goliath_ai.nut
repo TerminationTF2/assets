@@ -436,24 +436,11 @@ class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
 		// So just make all the armour pieces nonsolid and revert.
 		local goliath_scope = Goliath.GetScriptScope()
 
-		local armour_collision_sizes = array(goliath_scope.BreakableArmourPieces.len())
-		local cosmetic_collision_sizes = array(goliath_scope.IndestructibleCollision.len())
 
-		local function reg_armour_collision_info(arr, index, collision)
-		{
-			arr[index] = BreakablePieceSizeInfo()
-			{
-				handle = collision,
-				mins = collision.GetBoundingMins(),
-				maxs = collision.GetBoundingMaxs()
-			}
-			collision.SetSize(Vector(), Vector())
-		}
-
-		foreach (i, piece in goliath_scope.BreakableArmourPieces)
-			reg_armour_collision_info(armour_collision_sizes, i, piece.Collision)
-		foreach (i, piece in goliath_scope.IndestructibleCollision)
-			reg_armour_collision_info(cosmetic_collision_sizes, i, piece.Collision)
+		foreach (piece in goliath_scope.BreakableArmourPieces)
+			piece.Collision.AddSolidFlags(FSOLID_NOT_SOLID)
+		foreach (piece in goliath_scope.IndestructibleCollision)
+			piece.Collision.AddSolidFlags(FSOLID_NOT_SOLID)
 
 		local trace =
 		{
@@ -463,10 +450,10 @@ class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
 		}
 		TraceLineEx(trace)
 
-		foreach (info in armour_collision_sizes)
-			info.handle.SetSize(info.mins, info.maxs)
-		foreach (info in cosmetic_collision_sizes)
-			info.handle.SetSize(info.mins, info.maxs)
+		foreach (piece in goliath_scope.BreakableArmourPieces)
+			piece.Collision.RemoveSolidFlags(FSOLID_NOT_SOLID)
+		foreach (piece in goliath_scope.IndestructibleCollision)
+			piece.Collision.RemoveSolidFlags(FSOLID_NOT_SOLID)
 
 		if (trace.hit)
 			return trace.endpos
