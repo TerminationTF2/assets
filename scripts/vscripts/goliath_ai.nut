@@ -27,7 +27,7 @@ const TICK_INTERVAL = 0.015
 PrecacheScriptSound("Cart.Explode")
 
 ::TestMainAttack_TempSpawnWarn <- false
-// script TestMainAttack("ShotgunAttack")
+// script TestMainAttack("ShotgunAttackNuke")
 ::TestMainAttack <- function(main_attack_name)
 {
 	local goliath = null
@@ -72,7 +72,7 @@ PrecacheScriptSound("Cart.Explode")
 
 	local function baseof(derived_class, base_class)
 	{
-		for (local current_base; current_base = derived_class.getbase();)
+		for (local current_base = derived_class; current_base = current_base.getbase();)
 			if (current_base == base_class)
 				return true
 		return false
@@ -294,6 +294,7 @@ class GoliathAI.MainAttack
 {
 	Goliath = null
 	BaseAI = null
+	Weapon = null
 
 	EndCallbacks = null
 
@@ -308,7 +309,32 @@ class GoliathAI.MainAttack
 
 	function Start()
 	{
-		throw "MainAttack.Start is missing a required override method."
+		if (Weapon)
+		{
+			BaseAI.SwitchWeapon(Weapon)
+			GoliathAI.AddContextThink(Goliath, AwaitWeaponReadyThink.bindenv(this), "AwaitWeaponReady")
+		}
+	}
+
+	function AwaitWeaponReadyThink()
+	{
+		if (Goliath.GetActiveWeapon() != Weapon)
+			return -1.0
+
+		if (NetProps.GetPropFloat(Weapon, "m_flNextPrimaryAttack") > Time())
+			return -1.0
+
+		if (!WeaponHasAmmo(Weapon))
+			return -1.0
+
+		Fire()
+
+		return null
+	}
+
+	function Fire()
+	{
+		Weapon.PrimaryAttack()
 	}
 
 	function AddEndCallback(func)
@@ -320,6 +346,11 @@ class GoliathAI.MainAttack
 	{
 		foreach (func in EndCallbacks)
 			func()
+	}
+
+	function GiveWeapon(classname, def_idx)
+	{
+		// TODO
 	}
 
 	function WithAttribute(item, attribute, value, func)
@@ -383,66 +414,12 @@ class GoliathAI.MainAttack
 	}
 }
 
-class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
+class GoliathAI.ShotgunAttackAbstract extends GoliathAI.MainAttack
 {
-	Shotgun = null
-
-	//GameEvents = null // TODO: Should write some kind of util that can collect game events from class instances.
-
-	// constructor(bot, base_ai)
-	// {
-	// 	GameEvents = {}
-	// 	GameEvents.OnScriptHook_OnTakeDamage <- OnScriptHook_OnTakeDamage.bindenv(this)
-	// 	__CollectGameEventCallbacks(GameEvents)
-	// 	base.constructor(bot, base_ai)
-	// }
-
-	// function OnScriptHook_OnTakeDamage(params)
-	// {
-	// 	if (params.const_entity != Goliath)
-	// 		return
-
-	// 	if (params.attacker != Goliath)
-	// 		return
-
-	// 	params.early_out = true
-	// }
-
-	// TODO: Since most main attack routines will require a weapon, we can probably move a lot of this to the base class.
-
-	function SwitchToShotgun()
+	constructor(bot, base_ai)
 	{
-		Shotgun = GetWeaponByClassname("tf_weapon_shotgun*")
-		BaseAI.SwitchWeapon(Shotgun)
-	}
-
-	function Start()
-	{
-		SwitchToShotgun()
-		GoliathAI.AddContextThink(Goliath, AwaitShotgunReadyThink.bindenv(this), "AwaitShotgunReady")
-	}
-
-	function AwaitShotgunReadyThink()
-	{
-		if (Goliath.GetActiveWeapon() != Shotgun)
-			return -1.0
-
-		if (NetProps.GetPropFloat(Shotgun, "m_flNextPrimaryAttack") > Time())
-			return -1.0
-
-		if (!WeaponHasAmmo(Shotgun))
-			return -1.0
-
-		Fire()
-
-		return null
-	}
-
-	BreakablePieceSizeInfo = class
-	{
-		handle = null
-		mins = null
-		maxs = null
+		base.constructor(bot, base_ai)
+		Weapon = GetWeaponByClassname("tf_weapon_shotgun*")
 	}
 
 	function GetAimTargetPosition()
@@ -479,21 +456,27 @@ class GoliathAI.ShotgunAttack extends GoliathAI.MainAttack
 		return null
 	}
 
-	// For Napalm, try:
+	// For Napalm effects, try:
 	//  cinefx_goldrush
 	//  cinefx_goldrush_flames
 	//  etc.
+}
+
+class GoliathAI.ShotgunAttackNuke extends GoliathAI.ShotgunAttackAbstract
+{
 	function Fire()
 	{
-		WithAttribute(Shotgun, "override projectile type", -1, function()
+		WithAttribute(Weapon, "override projectile type", -1, function()
 		{
-			Shotgun.PrimaryAttack()
+			Weapon.PrimaryAttack()
 
 			// TODO: Effects here are placeholder.
+			//       They should be handled in a separate "configuration" file so the mission makers can
+			//       modify the effects quicker in prototyping.
 			EmitSoundEx(
 			{
 				sound_name = "Cart.Explode",
-				entity = Shotgun,
+				entity = Weapon,
 				sound_level = 255,
 				channel = CHAN_WEAPON,
 				filter_type = RECIPIENT_FILTER_GLOBAL
@@ -556,6 +539,7 @@ class GoliathAI.BaseAI
 
 		DisableNextbot()
 
+		// TODO: Should write some kind of util that can collect game events from class instances.
 		local scope = Goliath.GetScriptScope()
 		scope.MyBaseAI <- this
 		scope.MyBaseAIEvents <- {}
