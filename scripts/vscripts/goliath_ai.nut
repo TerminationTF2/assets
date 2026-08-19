@@ -1,3 +1,5 @@
+try IncludeScript("server_debug_draw.nut") catch (_) {}
+
 ::CONST <- getconsttable()
 ::ROOT <- getroottable()
 if (!("ConstantNamingConvention" in ROOT))
@@ -19,12 +21,14 @@ const CHAN_WEAPON = 1
 const MASK_SHOT = 0x46004003
 const MAX_COORD_FLOAT = 16384.0
 const NO_MISSION = 0
+const SF_TRIGGER_ALLOW_CLIENTS = 0x1
 const TICK_INTERVAL = 0.015
 ::CONTENTS_REDTEAM <- CONTENTS_TEAM1
 
 ::ATTRIBUTE_NOT_FOUND <- -444.4
 
 PrecacheScriptSound("Cart.Explode")
+PrecacheScriptSound("TFPlayer.FlameOut")
 
 ::TestMainAttack_TempSpawnWarn <- false
 // script TestMainAttack("ShotgunAttackNuke")
@@ -335,6 +339,7 @@ class GoliathAI.MainAttack
 	function Fire()
 	{
 		Weapon.PrimaryAttack()
+		End()
 	}
 
 	function AddEndCallback(func)
@@ -451,15 +456,12 @@ class GoliathAI.ShotgunAttackAbstract extends GoliathAI.MainAttack
 		if (trace.hit)
 			return trace.endpos
 
-		// Not throwing an error here because this is technically possible so we need to always handle it.
+		// Not throwing an error here because this is technically possible so we need to always
+		//  handle it.
+		// TODO: We don't always handle it!
 		printl("GetAimTargetPosition(): Could not find trace end position.")
 		return null
 	}
-
-	// For Napalm effects, try:
-	//  cinefx_goldrush
-	//  cinefx_goldrush_flames
-	//  etc.
 }
 
 class GoliathAI.ShotgunAttackNuke extends GoliathAI.ShotgunAttackAbstract
@@ -469,26 +471,26 @@ class GoliathAI.ShotgunAttackNuke extends GoliathAI.ShotgunAttackAbstract
 		WithAttribute(Weapon, "override projectile type", -1, function()
 		{
 			Weapon.PrimaryAttack()
+		})
 
-			// TODO: Effects here are placeholder.
-			//       They should be handled in a separate "configuration" file so the mission makers can
-			//       modify the effects quicker in prototyping.
-			EmitSoundEx(
-			{
-				sound_name = "Cart.Explode",
-				entity = Weapon,
-				sound_level = 255,
-				channel = CHAN_WEAPON,
-				filter_type = RECIPIENT_FILTER_GLOBAL
-			})
+		// TODO: Effects here are placeholder.
+		//       They should be handled in a separate "configuration" file so the mission
+		//       makers can modify the effects quicker in prototyping?
+		EmitSoundEx(
+		{
+			sound_name = "Cart.Explode",
+			entity = Weapon,
+			sound_level = 255,
+			channel = CHAN_WEAPON,
+			filter_type = RECIPIENT_FILTER_GLOBAL
+		})
 
-			PointExplosion(PointExplosionInfo()
-			{
-				origin = GetAimTargetPosition(),
-				angles = QAngle(-90.0, 0.0, 0.0)
-				particle = "hightower_explosion",
-				radius = 400.0
-			})
+		PointExplosion(PointExplosionInfo()
+		{
+			origin = GetAimTargetPosition(),
+			angles = QAngle(-90.0, 0.0, 0.0),
+			particle = "hightower_explosion",
+			radius = 400.0
 		})
 
 		End()
@@ -504,6 +506,7 @@ class GoliathAI.ShotgunAttackNuke extends GoliathAI.ShotgunAttackAbstract
 		radius = 146.0
 	}
 
+	// TODO: Add explosion kill icon.
 	function PointExplosion(info)
 	{
 		local bomb = Entities.CreateByClassname("tf_generic_bomb")
@@ -522,6 +525,107 @@ class GoliathAI.ShotgunAttackNuke extends GoliathAI.ShotgunAttackAbstract
 
 		bomb.SetHealth(1)
 		bomb.TakeDamage(1.0, DMG_GENERIC, Goliath)
+	}
+}
+
+class GoliathAI.ShotgunAttackNapalm extends GoliathAI.ShotgunAttackAbstract
+{
+	function Fire()
+	{
+		WithAttribute(Weapon, "override projectile type", -1, function()
+		{
+			Weapon.PrimaryAttack()
+		})
+
+		// TODO: Effects here are placeholder.
+		EmitSoundEx(
+		{
+			sound_name = "Cart.Explode",
+			entity = Weapon,
+			sound_level = 255,
+			channel = CHAN_WEAPON,
+			filter_type = RECIPIENT_FILTER_GLOBAL
+		})
+
+		local aim_target_position = GetAimTargetPosition()
+		local trace =
+		{
+			start = aim_target_position,
+			end = aim_target_position - Vector(0.0, 0.0, 5.0),
+			mask = CONTENTS_WATER|CONTENTS_SLIME
+		}
+		TraceLineEx(trace)
+
+		if (trace.hit)
+		{
+			// Napalm landed in water, don't do anything.
+			// TODO: Some kind of smoke effect seems appropriate.
+			EmitSoundEx(
+			{
+				sound_name = "TFPlayer.FlameOut",
+				origin = aim_target_position,
+				sound_level = 255,
+				filter_type = RECIPIENT_FILTER_GLOBAL
+			})
+		}
+		else
+		{
+			Napalm(NapalmInfo()
+			{
+				origin = GetAimTargetPosition()
+				debug_draw_trigger = true
+			})
+		}
+
+		End()
+	}
+
+	NapalmInfo = class
+	{
+		origin = null
+		damage_percent_per_second = 0.0
+		burn_duration = 7.5
+		linger_duration = 10.0
+		debug_draw_trigger = false
+	}
+
+	static PARTICLE_FADEOUT_TIME = 1.2
+
+	function Napalm(info)
+	{
+		local trigger = Entities.CreateByClassname("trigger_ignite")
+		NetProps.SetPropBool(trigger, "m_bForcePurgeFixedupStrings", true)
+
+		trigger.SetAbsOrigin(info.origin)
+		local angles = Goliath.EyeAngles() {x = 0.0}
+		angles.y += 90.0
+		trigger.SetAbsAngles(angles)
+
+		trigger.DispatchSpawn()
+		trigger.SetSize(Vector(-400.0, -400.0, -50.0), Vector(400.0, 400.0, 300.0))
+		trigger.SetSolid(SOLID_OBB)
+
+		// TODO: Disintegrate on kill?
+		// TODO: Disintegration kill icon?
+		trigger.KeyValueFromFloat("damage_percent_per_second", info.damage_percent_per_second)
+		trigger.KeyValueFromFloat("burn_duration", info.burn_duration)
+		trigger.KeyValueFromInt("spawnflags", SF_TRIGGER_ALLOW_CLIENTS)
+
+		if (info.debug_draw_trigger)
+			DebugDraw.Trigger(trigger, 255, 0, 0, info.linger_duration)
+
+		EntFireByHandle(trigger, "Kill", "", info.linger_duration, null, null)
+
+		local particle = SpawnEntityFromTable("info_particle_system",
+		{
+			origin = info.origin,
+			angles = angles, // TODO: This might not be the ideal orientation, haven't checked.
+			effect_name = "base_destroyed_smoke_doomsday",
+			start_active = true
+		})
+		NetProps.SetPropBool(particle, "m_bForcePurgeFixedupStrings", true)
+		EntFireByHandle(particle, "Stop", "", info.linger_duration - PARTICLE_FADEOUT_TIME, null, null)
+		EntFireByHandle(particle, "Kill", "", info.linger_duration, null, null)
 	}
 }
 
@@ -612,4 +716,3 @@ class GoliathAI.BaseAI
 		Cleanup()
 	}
 }
-
