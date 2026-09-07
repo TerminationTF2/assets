@@ -2754,7 +2754,7 @@ WaveSchedule
             WaitBeforeStarting 34
             WaitBetweenSpawns 5
 
-            TotalCurrency 26
+            TotalCurrency 25
 
             TFBot
 			{ 
@@ -2793,7 +2793,7 @@ WaveSchedule
             WaitBeforeStarting 31
             WaitBetweenSpawns 1.6
 
-            TotalCurrency 24
+            TotalCurrency 25
 
             TFBot
 			{ 
@@ -2983,6 +2983,7 @@ WaveSchedule
 			TFBot
 			{
 				Template T_TFBot_SentryBuster
+				ClassIcon soldier_hellmet_lite
 				Health 1200
 				Name "Merc Buster"
 

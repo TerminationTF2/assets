@@ -1769,7 +1769,7 @@ WaveSchedule
 				"OnTrigger" "tf_gamerules,playvo,graymann/gray_mann_drillstart_01a.wav,0,-1"
 				"OnTrigger" "tf_gamerules,playvo,graymann/gray_mann_drillstart_01a.wav,0,-1"
 				"OnTrigger" "tf_gamerules,playvo,graymann/gray_mann_drillstart_01a.wav,0,-1"
-				"OnTrigger" "player,$DisplayTextChat,{d9d9d9}Gray Mann{reset}: You might think you're clever breaking into my facility... But your luck will carry you no further!,0,-1"
+				"OnTrigger" "player,$DisplayTextChat,{d9d9d9}Gray Mann{reset}: You might think you're clever for breaking into my facility... But your luck will carry you no further!,0,-1"
 				"OnTrigger" "bridge_flank_door_A_unlock_relay,Trigger,,0.1,-1"
 				"OnTrigger" "bridge_flank_door_B_unlock_relay,Trigger,,0.1,-1"
 				"OnTrigger" "bridge_flank_door_C_unlock_relay,Trigger,,0.1,-1"
@@ -3203,18 +3203,6 @@ WaveSchedule
 				Action Kill
 				Delay 0.15
 			}
-            OnSpawnOutput
-			{
-				Target spawnhere
-				Action Kill
-				Delay 0.5
-			}
-            OnSpawnOutput
-			{
-				Target prop_bob
-				Action TurnOff
-				Delay 0.1
-			}
 			info_target
 			{
 				"targetname" "location"
@@ -3567,12 +3555,10 @@ WaveSchedule
 		SentryGun   //Spawn sentry gun
 		{
 			TeamNum 2 //Red sentry
-			Delay 0 //Delay before spawning, after starting the wave
 			Level 3 //Sentrygun level
-			//IsMini 1 //Is minisentry
-			BodyGroup 1 //Bodygroup 1 - enable mini sentry cone light
-			Skin 2 //skin 2, 3 - minisentry skin
 			Health 99999
+			BodyGroup 1
+			Skin 2
 			Delay 6
 			Position
 			{
@@ -3587,12 +3573,10 @@ WaveSchedule
 		SentryGun   //Spawn sentry gun
 		{
 			TeamNum 2 //Red sentry
-			Delay 0 //Delay before spawning, after starting the wave
 			Level 3 //Sentrygun level
-			//IsMini 1 //Is minisentry
-			BodyGroup 1 //Bodygroup 1 - enable mini sentry cone light
-			Skin 2 //skin 2, 3 - minisentry skin
 			Health 99999
+			BodyGroup 1
+			Skin 2
 			Delay 6
 			Position
 			{

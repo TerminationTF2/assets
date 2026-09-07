@@ -240,21 +240,6 @@ WaveSchedule
 				"StartDisabled" "0"
 				"angles" "0 90 0"
 			}
-            func_forcefield // Spawn Side Barrier Entity
-			{
-				"disablereceiveshadows" "0"
-				"origin" "-1415 8027 688"
-				"renderamt" "255"
-				"rendercolor" "255 255 255"
-				"renderfx" "0"
-				"rendermode" "10"
-				"TeamNum" "2"
-				"targetname" "flavour_front"
-				"mins" "-20 -200 0"
-				"maxs" "20 200 3000"
-				"StartDisabled" "0"
-				"angles" "0 90 0"
-			}
 
             logic_timer // Citadel Ambience
 			{
@@ -3143,7 +3128,7 @@ WaveSchedule
 				}
 			}
 		}
-		WaveSpawn // 15 Scouts and 15 DF Pyros
+		WaveSpawn // 15 Scouts and 15 Homewrecker Pyros
 		{
 			Name "Wave1_Subwave3_BombCarrierSupport"
 			WaitForAllSpawned "Wave1_Subwave3_BombCarrierGiant"
@@ -3188,7 +3173,7 @@ WaveSchedule
 		}
 
 		// Drill Tank Subwave
-		Wavespawn // 1 Drill Tank
+		WaveSpawn // 1 Drill Tank
 		{
 			Name "Wave1_Subwave4_DrillTank"
 			TotalCount 1
@@ -3676,14 +3661,16 @@ WaveSchedule
 				}
 				TFBot
 				{
+					Name "Shotgun Soldier"
 					Class Soldier
-					ClassIcon soldier_shotgun2
+					ClassIcon heavy_shotgun
 					Skill Easy
 					Attributes HoldFireUntilFullReload
 					WeaponRestrictions SecondaryOnly
 					Action Mobber
 
 					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+
 					CharacterAttributes
 					{
 						"never gib" 1
@@ -3691,14 +3678,16 @@ WaveSchedule
 				}
 				TFBot
 				{
+					Name "Shotgun Soldier"
 					Class Soldier
-					ClassIcon soldier_shotgun2
+					ClassIcon heavy_shotgun
 					Skill Easy
 					Attributes HoldFireUntilFullReload
 					WeaponRestrictions SecondaryOnly
 					Action Mobber
 
 					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+
 					CharacterAttributes
 					{
 						"never gib" 1
@@ -3706,14 +3695,16 @@ WaveSchedule
 				}
 				TFBot
 				{
+					Name "Shotgun Soldier"
 					Class Soldier
-					ClassIcon soldier_shotgun2
+					ClassIcon heavy_shotgun
 					Skill Easy
 					Attributes HoldFireUntilFullReload
 					WeaponRestrictions SecondaryOnly
 					Action Mobber
 
 					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+
 					CharacterAttributes
 					{
 						"never gib" 1
@@ -3721,14 +3712,16 @@ WaveSchedule
 				}
 				TFBot
 				{
+					Name "Shotgun Soldier"
 					Class Soldier
-					ClassIcon soldier_shotgun2
+					ClassIcon heavy_shotgun
 					Skill Easy
 					Attributes HoldFireUntilFullReload
 					WeaponRestrictions SecondaryOnly
 					Action Mobber
 
 					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+
 					CharacterAttributes
 					{
 						"never gib" 1
@@ -3736,14 +3729,16 @@ WaveSchedule
 				}
 				TFBot
 				{
+					Name "Shotgun Soldier"
 					Class Soldier
-					ClassIcon soldier_shotgun2
+					ClassIcon heavy_shotgun
 					Skill Easy
 					Attributes HoldFireUntilFullReload
 					WeaponRestrictions SecondaryOnly
 					Action Mobber
 
 					Item "TF_WEAPON_SHOTGUN_SOLDIER"
+
 					CharacterAttributes
 					{
 						"never gib" 1
